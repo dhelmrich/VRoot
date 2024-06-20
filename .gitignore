@@ -76,3 +76,4 @@ LocalDerivedDataCache/*
 
 lfs/*
 Screenshots/*
+/Server/__pycache__
