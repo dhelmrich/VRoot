@@ -1,0 +1,9 @@
+Package: zeromq
+Version: 4.3.4
+Port-Version: 1
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 7781a1513f90a26a24c3a5a7ab866a3dc1d6b462f3e6cbc5904b5e697d571f27
+Description: The ZeroMQ lightweight messaging kernel is a library which extends the standard socket interfaces with features traditionally provided by specialised messaging middleware products
+Type: Port
