@@ -64,7 +64,7 @@ class ROOTMRICNR_API ARootModellingPawn : public APawn
 {
   GENERATED_UCLASS_BODY()
 
-    // Pawn Components that are needed beforehand
+  // Pawn Components that are needed beforehand
 
 
 protected:
@@ -73,7 +73,7 @@ protected:
 
   /** Collision component */
   UPROPERTY(Category = Pawn, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-    USphereComponent* CollisionComponent;
+  USphereComponent* CollisionComponent;
 public:
   inline USphereComponent* GetCollisionComponent() const
   {
@@ -88,11 +88,11 @@ public:
 public:
   /** Scene component. Specifies translation (DisplayCluster hierarchy navigation) direction. */
   UPROPERTY(EditAnywhere, Category = "BasicPawn")
-    USceneComponent* TranslationDirection;
+  USceneComponent* TranslationDirection;
 
   /** Scene component. Specifies rotation center (DisplayCluster hierarchy rotation). */
   UPROPERTY(EditAnywhere, Category = "BasicPawn")
-    USceneComponent* RotationAround;
+  USceneComponent* RotationAround;
 
 
 public:
@@ -101,38 +101,39 @@ public:
   /* Category Pawn                                                        */
   /************************************************************************/
 
-  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnForward(float Value);     
-  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnRight(float Value);       
-  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnTurnRate(float Rate);     
-  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnLookUpRate(float Rate);   
-  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnScale(float Rate);        
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnForward(float Value);
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnRight(float Value);
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnTurnRate(float Rate);
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnLookUpRate(float Rate);
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnScale(float Rate);
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnIndiScale(float Rate);
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnRotationTouchX(float Value);
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnRotationTouchY(float Value);
-  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnBeginFire();              
-  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnEndFire();                
-  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnBeginLeftFire();          
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnBeginFire();
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnEndFire();
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnBeginLeftFire();
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnEndLeftFire();
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnRise(float Value);
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnSink(float Value);
-
-  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void SplitRoot();                
-  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void SelectRoot();               
-  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void ToggleAutoAppend();         
-  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void ToggleQuickMode();          
-  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void ToggleHandVis();            
-  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void ToggleModeLeft();           
-  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void TakeScreenshot();          
-  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void MoveSelectionUp();          
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void SplitRoot();
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void SelectRoot();
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void ToggleAutoAppend();
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void ToggleQuickMode();
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void ToggleHandVis();
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void ToggleModeLeft();
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void TakeScreenshot();
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void MoveSelectionUp();
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void MoveSelectionDown();
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void SelectEverything();
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnRotate(float Rate);
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnChangeHeight(float Value);
 
 
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void ResetInteraction();
 
   UPROPERTY() bool bRightFire = false;
   UPROPERTY() bool bScalingActive = false;
-  UPROPERTY() bool bLeftFire  = false;
+  UPROPERTY() bool bLeftFire = false;
   UFUNCTION() void ToggleSelection(AActor* Overlappor);
 
   UFUNCTION(Category = "Pawn") void NotifyMeOnInteractionChange();
@@ -164,46 +165,46 @@ public:
   UPROPERTY() FTransform ScaleReferencePoint;
   UPROPERTY() float lastWidth = 2.f;
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Draw")
-    FVector DefaultDrawIndicatorPosition = FVector(50.f, 0.f, 0.f);
+  FVector DefaultDrawIndicatorPosition = FVector(50.f, 0.f, 0.f);
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Draw")
-    //FVector DefaultDrawIndicatorScale = FVector(20.f, 5.f, 5.f);
-    FVector DefaultDrawIndicatorScale = FVector(50.f, 50.f, 50.f);
+  //FVector DefaultDrawIndicatorScale = FVector(20.f, 5.f, 5.f);
+  FVector DefaultDrawIndicatorScale = FVector(50.f, 50.f, 50.f);
 
-    /************************************************************************/
-    /* Category Draw New System                                             */
-    /************************************************************************/
+  /************************************************************************/
+  /* Category Draw New System                                             */
+  /************************************************************************/
   UStaticMeshComponent* NewNodeIndicator;
 
   bool bSetNewRoot = false;
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Config, Category = "Draw")
-    float fMaximumSegmentLength = 100.f;
+  float fMaximumSegmentLength = 100.f;
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Config, Category = "Draw")
-    bool bDemoVersion = false;
+  bool bDemoVersion = false;
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Draw")
-    bool bFixMaxLength = false;
+  bool bFixMaxLength = false;
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Draw")
-    bool bFixSegmentSize = false;
+  bool bFixSegmentSize = false;
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Config, Category = "System")
-    bool bUseHMD = false;
+  bool bUseHMD = false;
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Config, Category = "Draw")
-    bool bAdjustRadiusDuringDrawing = false;
+  bool bAdjustRadiusDuringDrawing = false;
   UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Edit")
-    class AStaticMeshActor* ZeroHighlight;
+  class AStaticMeshActor* ZeroHighlight;
 
-    UFUNCTION()
+  UFUNCTION()
   void ToggleFixSegmentSize(bool bNewSegmentPolicy);
 
   UFUNCTION()
-    void HighlightEndingDraw(UPrimitiveComponent* HitComp,
-      AActor* OtherActor,
-      UPrimitiveComponent* OtherComp,
-      int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+  void HighlightEndingDraw(UPrimitiveComponent* HitComp,
+    AActor* OtherActor,
+    UPrimitiveComponent* OtherComp,
+    int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
   UFUNCTION()
-    void StopHighlightEndingDraw(UPrimitiveComponent* HitComp,
-      AActor* OtherActor,
-      UPrimitiveComponent* OtherComp,
-      int32 OtherBodyIndex);
+  void StopHighlightEndingDraw(UPrimitiveComponent* HitComp,
+    AActor* OtherActor,
+    UPrimitiveComponent* OtherComp,
+    int32 OtherBodyIndex);
 
 
   /************************************************************************/
@@ -223,16 +224,16 @@ public:
   UPROPERTY() bool bCanDraw = true;
 
   UPROPERTY(EditAnywhere)
-    bool bShouldMoveDependencies = true;
+  bool bShouldMoveDependencies = true;
 
   UFUNCTION()
-    void SelectionAdd(UPrimitiveComponent* HitComp,
+  void SelectionAdd(UPrimitiveComponent* HitComp,
     AActor* OtherActor,
     UPrimitiveComponent* OtherComp,
     int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
   UFUNCTION()
-    void SelectionExit(UPrimitiveComponent* HitComp,
+  void SelectionExit(UPrimitiveComponent* HitComp,
     AActor* OtherActor,
     UPrimitiveComponent* OtherComp,
     int32 OtherBodyIndex);
@@ -249,11 +250,11 @@ public:
   bool bWidgetsVisible = false;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Edit")
-    AMenuWidget* DiaMeta;
+  AMenuWidget* DiaMeta;
   UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Edit")
-    AMenuWidget* MoveMeta;
+  AMenuWidget* MoveMeta;
   UPROPERTY()
-    float InvalidationTimer = 0.f;
+  float InvalidationTimer = 0.f;
 
 
   /************************************************************************/
@@ -277,31 +278,31 @@ public:
   /************************************************************************/
   /* Category New Interaction System                                      */
   /************************************************************************/
-  UPROPERTY(VisibleAnywhere,BlueprintReadOnly, Category = "Navigation") FTransform ControllerDrag;
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Navigation") FTransform ControllerDrag;
   UPROPERTY(VisibleAnywhere, BlueprintAssignable, Category = "Interaction") FActionDelegate ActionTaken;
-  
+
   UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Config, Category = "Interaction")
-    float ArmLength = 80.f;
+  float ArmLength = 80.f;
   UPROPERTY()
-    FVector DrawBounds;
+  FVector DrawBounds;
   UPROPERTY()
-    FVector DrawOrigin;
+  FVector DrawOrigin;
   UPROPERTY()
-    FVector DrawForward;
+  FVector DrawForward;
   UPROPERTY()
-      FVector DrawScale;
-    
+  FVector DrawScale;
+
   FVector TouchInput;
   bool __x, __y;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Config, Category = "Interaction")
-    float TouchDeadZone = 0.8f;
+  float TouchDeadZone = 0.8f;
   UPROPERTY()
-   FVector TouchLastInput;
+  FVector TouchLastInput;
   UPROPERTY()
-   bool TouchInitialized = false;
+  bool TouchInitialized = false;
   UPROPERTY()
-   float TouchPadDeltaTime;
+  float TouchPadDeltaTime;
 
 
   FCollisionObjectQueryParams Params;
@@ -314,7 +315,7 @@ private:
   UFUNCTION(Category = "Pawn") void HandlePhysicsAndAttachActor(AActor* HitActor);
   void NotifyActorsDependingOnInteractionMode();
 
-  EVRSelectionMode SelectionMode{ EVRSelectionMode::sel_mode_tog};
+  EVRSelectionMode SelectionMode{ EVRSelectionMode::sel_mode_tog };
 
   // SCALING INTERACTION TIMER
   FTimerDelegate ScaleTimerDel;
@@ -343,6 +344,12 @@ protected:
   // Use only when handling cross-device (PC, HMD, CAVE/ROLV) compatibility manually. HMD right motion controller.
   UPROPERTY() UMotionControllerComponent* HmdRightMotionController = nullptr;
 
+  UPROPERTY()
+  UXRDeviceVisualizationComponent* HmdLeftMotionControllerVisualization = nullptr;
+
+  UPROPERTY()
+  UXRDeviceVisualizationComponent* HmdRightMotionControllerVisualization = nullptr;
+
 
   // PC: Camera, HMD: Camera, CAVE/ROLV: Shutter glasses.
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pawn", meta = (AllowPrivateAccess = "true")) USceneComponent* Head = nullptr;
@@ -360,7 +367,7 @@ protected:
 
 
   UPROPERTY() bool bFiring = false;
-  
+
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pawn") EVRInteractionModes InteractionMode = EVRInteractionModes::int_mode_draw;
 

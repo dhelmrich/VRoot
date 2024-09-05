@@ -854,7 +854,7 @@ AOverlapTransform* URootArchitecture::CreateNewSegment(FTransform NewCircle, int
   SegmentNumberIndices.Add(NewSeg);
   SegmentChangeIndices.Add(SpawnUtil);
 
-  if (GEngine && true)
+  if (GEngine && false)
   {
     GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Black, FString::Printf(TEXT("Collision Actor Num: %d"), SpawnUtil->SegmentNum));
 

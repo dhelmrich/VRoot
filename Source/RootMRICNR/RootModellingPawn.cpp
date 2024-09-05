@@ -33,6 +33,7 @@
 #include "Engine/BlockingVolume.h"
 
 #include "UnrealClient.h"
+#include "XRDeviceVisualizationComponent.h"
 #include "GameFramework/PlayerStart.h"
 
 // ARootModellingPawn
@@ -88,15 +89,20 @@ ARootModellingPawn::ARootModellingPawn(const FObjectInitializer& ObjectInitializ
 
 
   HmdLeftMotionController = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("HmdLeftMotionController"));
+  HmdLeftMotionControllerVisualization = CreateDefaultSubobject<UXRDeviceVisualizationComponent>(TEXT("HmdLeftMotionControllerVisualization"));
+  HmdLeftMotionControllerVisualization->SetupAttachment(HmdLeftMotionController);
+  HmdLeftMotionControllerVisualization->SetVisibility(true,true);
   HmdLeftMotionController->SetupAttachment(RootComponent);
   HmdLeftMotionController->SetTrackingSource(EControllerHand::Left);
-  HmdLeftMotionController->SetShowDeviceModel(true);
   HmdLeftMotionController->SetVisibility(false);
 
   HmdRightMotionController = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("HmdRightMotionController"));
+  HmdRightMotionControllerVisualization = CreateDefaultSubobject<UXRDeviceVisualizationComponent>(TEXT("HmdRightMotionControllerVisualization"));
+  HmdRightMotionControllerVisualization->SetupAttachment(HmdRightMotionController);
+  HmdRightMotionControllerVisualization->SetVisibility(true, true);
   HmdRightMotionController->SetupAttachment(RootComponent);
   HmdRightMotionController->SetTrackingSource(EControllerHand::Right);
-  HmdRightMotionController->SetShowDeviceModel(true);
+  //HmdRightMotionController->SetShowDeviceModel(true);
   HmdRightMotionController->SetVisibility(false);
 
 
@@ -122,7 +128,7 @@ ARootModellingPawn::ARootModellingPawn(const FObjectInitializer& ObjectInitializ
   }
   else
   {
-    throw "Sphere not loaded";
+    UE_LOG(LogActor, Error, TEXT("Could not find the draw indicator asset"));
   }
   DrawIndicator->SetVisibility(true); // for thesis picture
   this->DrawIndicator->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
@@ -435,6 +441,8 @@ void ARootModellingPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputC
     PlayerInputComponent->BindAxis("ScaleIndicator", this, &ARootModellingPawn::OnIndiScale);
     PlayerInputComponent->BindAxis("MoveUp", this, &ARootModellingPawn::OnRise);
     PlayerInputComponent->BindAxis("Down", this, &ARootModellingPawn::OnSink);
+    PlayerInputComponent->BindAxis("RotateAxis", this, &ARootModellingPawn::OnRotate);
+    PlayerInputComponent->BindAxis("HeightAxis", this, &ARootModellingPawn::OnChangeHeight);
 
     PlayerInputComponent->BindAxis("RotateTouchX", this, &ARootModellingPawn::OnRotationTouchX);
     PlayerInputComponent->BindAxis("RotateTouchY", this, &ARootModellingPawn::OnRotationTouchY);
@@ -463,15 +471,15 @@ void ARootModellingPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 void ARootModellingPawn::OnScale_Implementation(float Rate)
 {
-  if(Rate > 0.0001f)
+  if(FMath::Abs(Rate) > 0.0001f)
   {
-    float chg = 1.f + Rate*0.5f;
+    double chg = 1.0 + ((Rate < 0.0) ? Rate * 0.00025 : Rate * 0.0005);
     for (AOverlapTransform* ovlp : Selection)
     {
       ovlp->SetActorRelativeScale3D(ovlp->GetActorRelativeScale3D() * chg);
     }
     GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
-    GetWorld()->GetTimerManager().SetTimer(TimerHandle, ScaleTimerDel,1,false, 5.f);
+    GetWorld()->GetTimerManager().SetTimer(TimerHandle, ScaleTimerDel,1,false, 1.f);
   }
 }
 
@@ -927,6 +935,21 @@ void ARootModellingPawn::OnBeginFire_Implementation()
 
 }
 
+void ARootModellingPawn::OnRotate_Implementation(float Rate)
+{
+  // rotate the draw space
+  FRotator NewRot = RegisteredDrawSpace->GetActorRotation();
+  NewRot.Yaw += Rate;
+  RegisteredDrawSpace->SetActorRotation(NewRot);
+}
+
+void ARootModellingPawn::OnChangeHeight_Implementation(float Value)
+{
+  FVector NewLoc = RegisteredDrawSpace->GetActorLocation();
+  NewLoc.Z += Value;
+  RegisteredDrawSpace->SetActorLocation(NewLoc);
+}
+
 void ARootModellingPawn::ToggleSelection(AActor* Overlappor)
 {
   AOverlapTransform* Ovlptrnsfrm = Cast<AOverlapTransform>(Overlappor);
@@ -1085,7 +1108,7 @@ void ARootModellingPawn::OnBeginLeftFire_Implementation()
       {
         GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TfoB.GetActor()->GetFName().ToString());
       }
-      if (TfoB.GetActor() == DiaMeta)
+      if (TfoB.GetActor() == DiaMeta && !bDemoVersion)
       {
         ZeroHighlight->SetActorHiddenInGame(false);
         ZeroHighlight->SetActorLocation(DiaMeta->GetActorLocation());
@@ -1208,7 +1231,8 @@ void ARootModellingPawn::OnEndLeftFire_Implementation()
     }
     Dependend.Append(Selection);
     RegisteredDrawSpace->UpdateSections(Dependend,bFixSegmentSize,bAdjustRadiusDuringDrawing);
-    ZeroHighlight->SetActorHiddenInGame(true);
+    if(GrabbedActor == DiaMeta)
+      ZeroHighlight->SetActorHiddenInGame(true);
     Dependend.Empty();
     ActionTaken.Broadcast();
   }
