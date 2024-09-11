@@ -21,22 +21,33 @@ public class RootMRICNR : ModuleRules
                 //"UnrealEd",
                 "HeadMountedDisplay",
                 "InputCore",
-                "StaticZMQ",
                 "RHI",
                 "RenderCore",
                 "ProceduralMeshComponent",
                 "Json",
-                "DesktopPlatform",
+                //"DesktopPlatform",
                 "UMG",
                 "Slate",
                 "SlateCore"
         });
 
+        // if we are not building for Android
+        if (Target.Platform != UnrealTargetPlatform.Android)
+        {
+          PublicDependencyModuleNames.AddRange(new string[] {
+            "StaticZMQ"
+          });
+          PrivateDependencyModuleNames.AddRange(new string[] {
+            "StaticZMQ"
+          });
+            PublicIncludePaths.Add(Path.Combine(ModuleDirectory.Replace("Source","").Replace("RootMRICNR",""), "Plugins",  "StaticZMQ", "Source", "ThirdParty", "StaticZMQLibrary", "include"));
+        }
+
 		PrivateDependencyModuleNames.AddRange(new string[] {
                 //"Slate",
                 //"SlateCore",
                 "ProceduralMeshComponent",
-                "StaticZMQ" });
+                 });
 
     }
 
@@ -48,9 +59,9 @@ public class RootMRICNR : ModuleRules
         string path = fullpath.Substring(0, fullpath.LastIndexOf("\\"));
         //bool bDebug = (Target.Configuration == UnrealTargetConfiguration.Debug && BuildConfiguration.bDebugBuildsActuallyUseDebugCRT);
         // TODO done add project name as start for correct behavior
-//         PublicIncludePaths.AddRange(new string[] {
-//             Path.Combine(path,"Plugins\\libzmq\\src")
-//         });
+         PublicIncludePaths.AddRange(new string[] {
+             Path.Combine(path,"Plugins\\libzmq\\src")
+         });
 //         //  PublicAdditionalLibraries.Add(Path.Combine(ModulePath, "Boost/lib/libboost_chrono-vc141-mt-1_64.lib"));
 //         // libzmq-v142-mt-s-4_3_4
 //         if (Target.Platform == UnrealTargetPlatform.Win64)

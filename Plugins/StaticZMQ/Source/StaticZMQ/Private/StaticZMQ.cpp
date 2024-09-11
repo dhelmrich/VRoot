@@ -4,7 +4,9 @@
 #include "Core.h"
 #include "Modules/ModuleManager.h"
 #include "Interfaces/IPluginManager.h"
-#include "StaticZMQLibrary/zmq.h"
+//#include "ThirdParty/StaticZMQLibrary/include/zmq.h"
+#include "zmq.h"
+
 
 #define LOCTEXT_NAMESPACE "FStaticZMQModule"
 

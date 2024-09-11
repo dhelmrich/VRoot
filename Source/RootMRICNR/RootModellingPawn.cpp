@@ -9,7 +9,6 @@
 #include "Kismet/GameplayStatics.h"
 
 
-#include "HeadMountedDisplayFunctionLibrary.h"
 #include "GrabbingBehaviorComponent.h"
 #include "Grabable.h"
 #include "Clickable.h"
@@ -33,7 +32,7 @@
 #include "Engine/BlockingVolume.h"
 
 #include "UnrealClient.h"
-#include "XRDeviceVisualizationComponent.h"
+//#include "XRDeviceVisualizationComponent.h"
 #include "GameFramework/PlayerStart.h"
 
 // ARootModellingPawn
@@ -89,17 +88,18 @@ ARootModellingPawn::ARootModellingPawn(const FObjectInitializer& ObjectInitializ
 
 
   HmdLeftMotionController = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("HmdLeftMotionController"));
-  HmdLeftMotionControllerVisualization = CreateDefaultSubobject<UXRDeviceVisualizationComponent>(TEXT("HmdLeftMotionControllerVisualization"));
-  HmdLeftMotionControllerVisualization->SetupAttachment(HmdLeftMotionController);
-  HmdLeftMotionControllerVisualization->SetVisibility(true,true);
+  //HmdLeftMotionControllerVisualization = CreateDefaultSubobject<UXRDeviceVisualizationComponent>(TEXT("HmdLeftMotionControllerVisualization"));
+  //HmdLeftMotionControllerVisualization->SetupAttachment(HmdLeftMotionController);
+  //HmdLeftMotionControllerVisualization->SetVisibility(true,true);
   HmdLeftMotionController->SetupAttachment(RootComponent);
   HmdLeftMotionController->SetTrackingSource(EControllerHand::Left);
+  //HmdLeftMotionController->SetShowDeviceModel(true);
   HmdLeftMotionController->SetVisibility(false);
 
   HmdRightMotionController = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("HmdRightMotionController"));
-  HmdRightMotionControllerVisualization = CreateDefaultSubobject<UXRDeviceVisualizationComponent>(TEXT("HmdRightMotionControllerVisualization"));
-  HmdRightMotionControllerVisualization->SetupAttachment(HmdRightMotionController);
-  HmdRightMotionControllerVisualization->SetVisibility(true, true);
+  //HmdRightMotionControllerVisualization = CreateDefaultSubobject<UXRDeviceVisualizationComponent>(TEXT("HmdRightMotionControllerVisualization"));
+  //HmdRightMotionControllerVisualization->SetupAttachment(HmdRightMotionController);
+  //HmdRightMotionControllerVisualization->SetVisibility(true, true);
   HmdRightMotionController->SetupAttachment(RootComponent);
   HmdRightMotionController->SetTrackingSource(EControllerHand::Right);
   //HmdRightMotionController->SetShowDeviceModel(true);
@@ -170,20 +170,20 @@ ARootModellingPawn::ARootModellingPawn(const FObjectInitializer& ObjectInitializ
   this->InteractionMode = EVRInteractionModes::int_mode_menu;
   NewParams.AddIgnoredActor(RegisteredDrawSpace);
   //INITALIZE MENU MODE WITH STATIC MESHES
-//  LiteralLeftHand = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Left Hand Model"));
-// 	LiteralLeftHand->RegisterComponent();
-// 	LiteralLeftHand->SetStaticMesh(HandOpen);
-// 	LiteralLeftHand->SetupAttachment(LeftHand);
-// 	LiteralLeftHand->SetRelativeLocation(FVector(50, 0, 0));
-// 	LiteralLeftHand->SetWorldScale3D(FVector(1, -1, 1));
-// 	LiteralLeftHand->SetVisibility(true);
-// 
-//   LiteralRightHand = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Right Hand Model"));
-// 	LiteralRightHand->RegisterComponent();
-// 	LiteralRightHand->SetStaticMesh(HandOpen);
-// 	LiteralRightHand->SetupAttachment(RightHand);
-//  LiteralRightHand->SetRelativeLocation(FVector(50, 0, 0));
-// 	LiteralRightHand->SetVisibility(true);
+  //  LiteralLeftHand = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Left Hand Model"));
+  // 	LiteralLeftHand->RegisterComponent();
+  // 	LiteralLeftHand->SetStaticMesh(HandOpen);
+  // 	LiteralLeftHand->SetupAttachment(LeftHand);
+  // 	LiteralLeftHand->SetRelativeLocation(FVector(50, 0, 0));
+  // 	LiteralLeftHand->SetWorldScale3D(FVector(1, -1, 1));
+  // 	LiteralLeftHand->SetVisibility(true);
+  // 
+  //   LiteralRightHand = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Right Hand Model"));
+  // 	LiteralRightHand->RegisterComponent();
+  // 	LiteralRightHand->SetStaticMesh(HandOpen);
+  // 	LiteralRightHand->SetupAttachment(RightHand);
+  //  LiteralRightHand->SetRelativeLocation(FVector(50, 0, 0));
+  // 	LiteralRightHand->SetVisibility(true);
 
 }
 
@@ -280,17 +280,17 @@ bool ARootModellingPawn::CheckIsHeadMountedModeActive()
 {
   // Aachen version of detecting HMD presence
  //return UHeadMountedDisplayFunctionLibrary::IsHeadMountedDisplayConnected();
-//  return UHeadMountedDisplayFunctionLibrary::IsHeadMountedDisplayEnabled();
+  //  return UHeadMountedDisplayFunctionLibrary::IsHeadMountedDisplayEnabled();
 
-//   IHeadMountedDisplay* hmd = nullptr;
-//   TSharedPtr<IStereoRendering, ESPMode::ThreadSafe> stereo = nullptr;
-//   if (GEngine && GEngine->XRSystem)
-//   {
-//     hmd = GEngine->XRSystem->GetHMDDevice();
-//     stereo = GEngine->XRSystem->GetStereoRenderingDevice();
-//     return hmd->IsHMDEnabled() && hmd->IsHMDConnected() && stereo->IsStereoEnabled();
-//   }
-//   return false;
+  //   IHeadMountedDisplay* hmd = nullptr;
+  //   TSharedPtr<IStereoRendering, ESPMode::ThreadSafe> stereo = nullptr;
+  //   if (GEngine && GEngine->XRSystem)
+  //   {
+  //     hmd = GEngine->XRSystem->GetHMDDevice();
+  //     stereo = GEngine->XRSystem->GetStereoRenderingDevice();
+  //     return hmd->IsHMDEnabled() && hmd->IsHMDConnected() && stereo->IsStereoEnabled();
+  //   }
+  //   return false;
   return bUseHMD;
 }
 
@@ -315,7 +315,8 @@ void ARootModellingPawn::BeginPlay()
 
   ScaleTimerDel.BindLambda([this]()
   {
-    RegisteredDrawSpace->UpdateSections(Selection, bFixSegmentSize);
+    if(Selection.Num() > 0)
+      RegisteredDrawSpace->UpdateSections(Selection, bFixSegmentSize);
   });
 
   if (CheckIsHeadMountedModeActive())
@@ -362,55 +363,55 @@ void ARootModellingPawn::BeginPlay()
   }
 
 
-//   UInputSettings::GetInputSettings()->RemoveAxisMapping(FInputAxisKeyMapping("TurnRate", EKeys::MouseX));
-//   UInputSettings::GetInputSettings()->RemoveAxisMapping(FInputAxisKeyMapping("LookUpRate", EKeys::MouseY));
-// 
-//   HmdLeftMotionController->SetVisibility(ShowHMDControllers);
-//   HmdRightMotionController->SetVisibility(ShowHMDControllers);
-//   if (HmdTracker1->IsActive()) {
-//     HmdTracker1->SetVisibility(ShowHMDControllers);
-//   }
-//   if (HmdTracker2->IsActive()) {
-//     HmdTracker2->SetVisibility(ShowHMDControllers);
-//   }
-// 
-//   LeftHand->AttachToComponent(HmdLeftMotionController, FAttachmentTransformRules::SnapToTargetIncludingScale);
-//   RightHand->AttachToComponent(HmdRightMotionController, FAttachmentTransformRules::SnapToTargetIncludingScale);
-//   Head->AttachToComponent(GetCameraComponent(), FAttachmentTransformRules::SnapToTargetIncludingScale);
+  //   UInputSettings::GetInputSettings()->RemoveAxisMapping(FInputAxisKeyMapping("TurnRate", EKeys::MouseX));
+  //   UInputSettings::GetInputSettings()->RemoveAxisMapping(FInputAxisKeyMapping("LookUpRate", EKeys::MouseY));
+  // 
+  //   HmdLeftMotionController->SetVisibility(ShowHMDControllers);
+  //   HmdRightMotionController->SetVisibility(ShowHMDControllers);
+  //   if (HmdTracker1->IsActive()) {
+  //     HmdTracker1->SetVisibility(ShowHMDControllers);
+  //   }
+  //   if (HmdTracker2->IsActive()) {
+  //     HmdTracker2->SetVisibility(ShowHMDControllers);
+  //   }
+  // 
+  //   LeftHand->AttachToComponent(HmdLeftMotionController, FAttachmentTransformRules::SnapToTargetIncludingScale);
+  //   RightHand->AttachToComponent(HmdRightMotionController, FAttachmentTransformRules::SnapToTargetIncludingScale);
+  //   Head->AttachToComponent(GetCameraComponent(), FAttachmentTransformRules::SnapToTargetIncludingScale);
 
-  //In ADisplayClusterPawn::BeginPlay() input is disabled on all slaves, so we cannot react to button presses, e.g. on the flystick correctly.
-  //Therefore, we activate it again:
-  UWorld* World = GetWorld();
-  if (World)
-  {
-    APlayerController* PlayerController = World->GetFirstPlayerController();
-    if (PlayerController)
+    //In ADisplayClusterPawn::BeginPlay() input is disabled on all slaves, so we cannot react to button presses, e.g. on the flystick correctly.
+    //Therefore, we activate it again:
+    UWorld* World = GetWorld();
+    if (World)
     {
-      this->EnableInput(PlayerController);
+      APlayerController* PlayerController = World->GetFirstPlayerController();
+      if (PlayerController)
+      {
+        this->EnableInput(PlayerController);
+      }
     }
-  }
 
-  // INITALIZE MENU MODE HERE BECAUSE OF DEFERRED LOADING IN BLUEPRINTS
+    // INITALIZE MENU MODE HERE BECAUSE OF DEFERRED LOADING IN BLUEPRINTS
 
-  //PointIndicator = FindComponentByClass<UParticleSystemComponent>();
-  DrawConnection = Cast<UParticleSystemComponent>(GetDefaultSubobjectByName(TEXT("DrawHelpLaser")));
-  PointIndicator = Cast<UParticleSystemComponent>(GetDefaultSubobjectByName(TEXT("PointyLaser")));
-  PointIndicator->SetActive(true, true);
-  DrawConnection->SetActive(false, true);
-  DrawIndicator->SetRelativeLocation(DefaultDrawIndicatorPosition);
-  DrawIndicator->SetWorldScale3D(DefaultDrawIndicatorScale);
+    //PointIndicator = FindComponentByClass<UParticleSystemComponent>();
+    DrawConnection = Cast<UParticleSystemComponent>(GetDefaultSubobjectByName(TEXT("DrawHelpLaser")));
+    PointIndicator = Cast<UParticleSystemComponent>(GetDefaultSubobjectByName(TEXT("PointyLaser")));
+    PointIndicator->SetActive(true, true);
+    DrawConnection->SetActive(false, true);
+    DrawIndicator->SetRelativeLocation(DefaultDrawIndicatorPosition);
+    DrawIndicator->SetWorldScale3D(DefaultDrawIndicatorScale);
 
-  TArray<AActor*> Found;
-  UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABlockingVolume::StaticClass(),Found);
-  NewParams.AddIgnoredActors(Found);
+    TArray<AActor*> Found;
+    UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABlockingVolume::StaticClass(),Found);
+    NewParams.AddIgnoredActors(Found);
 
-  NewParams.bTraceComplex = true;
-  NewParams.AddIgnoredActor(this);
+    NewParams.bTraceComplex = true;
+    NewParams.AddIgnoredActor(this);
 
-  
+    
 
-//   DrawIndicator->SetVisibility(false,false);
-//   PointIndicator->SetActive(false,true);
+  //   DrawIndicator->SetVisibility(false,false);
+  //   PointIndicator->SetActive(false,true);
 
 }
 
@@ -473,7 +474,7 @@ void ARootModellingPawn::OnScale_Implementation(float Rate)
 {
   if(FMath::Abs(Rate) > 0.0001f)
   {
-    double chg = 1.0 + ((Rate < 0.0) ? Rate * 0.00025 : Rate * 0.0005);
+    double chg = 1.0 + ((Rate < 0.0) ? Rate * 0.0025 : Rate * 0.005);
     for (AOverlapTransform* ovlp : Selection)
     {
       ovlp->SetActorRelativeScale3D(ovlp->GetActorRelativeScale3D() * chg);
@@ -544,7 +545,7 @@ void ARootModellingPawn::SelectRoot_Implementation()
   bCanDraw = !bCanDraw;
   if (GEngine && false)
   {
-    GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Can Draw: %d"),bCanDraw));
+    GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Can Draw: %d"),(int)bCanDraw));
   }
 
 }
@@ -1084,7 +1085,7 @@ void ARootModellingPawn::OnBeginLeftFire_Implementation()
       auto vec = LeftHand->GetForwardVector();
       float zcomp = LeftHand->GetForwardVector().Z;
       float planecomp = LeftHand->GetForwardVector() | FVector(0, 0, 1);
-	  UE_LOG(LogTemp, Warning, TEXT("Trigger went in the direction of (%d,%d,%d) with projection %d"), vec.X, vec.Y, vec.Z, planecomp);
+	  //UE_LOG(LogTemp, Warning, TEXT("Trigger went in the direction of (%d,%d,%d) with projection %d"), vec.X, vec.Y, vec.Z, planecomp);
 	  this->RegisteredDrawSpace->GetActorBounds(false, DrawOrigin, this->DrawBounds, false);
       if (planecomp < 0.1)
       {

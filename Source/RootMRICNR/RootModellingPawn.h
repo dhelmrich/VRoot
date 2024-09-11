@@ -344,11 +344,11 @@ protected:
   // Use only when handling cross-device (PC, HMD, CAVE/ROLV) compatibility manually. HMD right motion controller.
   UPROPERTY() UMotionControllerComponent* HmdRightMotionController = nullptr;
 
-  UPROPERTY()
-  UXRDeviceVisualizationComponent* HmdLeftMotionControllerVisualization = nullptr;
-
-  UPROPERTY()
-  UXRDeviceVisualizationComponent* HmdRightMotionControllerVisualization = nullptr;
+ // UPROPERTY()
+ // UXRDeviceVisualizationComponent* HmdLeftMotionControllerVisualization = nullptr;
+ //
+ // UPROPERTY()
+ // UXRDeviceVisualizationComponent* HmdRightMotionControllerVisualization = nullptr;
 
 
   // PC: Camera, HMD: Camera, CAVE/ROLV: Shutter glasses.

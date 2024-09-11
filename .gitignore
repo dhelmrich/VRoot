@@ -78,3 +78,5 @@ lfs/*
 Screenshots/*
 /Server/__pycache__
 /Plugins/OculusXR
+/Plugins/MetaXRPlatform
+/Plugins/MetaXR
