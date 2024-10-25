@@ -81,11 +81,11 @@ public:
       AOverlapTransform* FindTransformByRootNumber(int Root, int Segment);
 
 
-    UFUNCTION()
+    UFUNCTION(BlueprintCallable)
       void SyncRadius(AOverlapTransform* Selection);
 
 
-    UFUNCTION()
+    UFUNCTION(BlueprintCallable)
       bool HasRoot();
 
 

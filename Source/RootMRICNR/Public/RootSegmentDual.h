@@ -44,7 +44,7 @@ public:
   UPROPERTY()
     bool bAppendAfter = true;
 
-  void OnClicked_Implementation(FVector WorldPositionOfClick) override;
+  void OnClickSignal_Implementation(FVector WorldPositionOfClick) override;
 
 
   void OnGrabbed_Implementation() override;

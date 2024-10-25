@@ -119,7 +119,7 @@ void URootSegment::RecenterChildren(URootSegment* Originator)
   }
 }
 
-void URootSegment::OnClicked_Implementation(FVector WorldPositionOfClick)
+void URootSegment::OnClickSignal_Implementation(FVector WorldPositionOfClick)
 {
   auto relative_position = WorldPositionOfClick - GetComponentLocation();
   if (relative_position.Size() < (GetComponentScale().X/2.f))

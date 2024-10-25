@@ -405,6 +405,7 @@ void ARootModellingPawn::BeginPlay()
     UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABlockingVolume::StaticClass(),Found);
     NewParams.AddIgnoredActors(Found);
 
+
     NewParams.bTraceComplex = true;
     NewParams.AddIgnoredActor(this);
 
@@ -1136,7 +1137,7 @@ void ARootModellingPawn::OnBeginLeftFire_Implementation()
     IGrabable* GrabableActor = Cast<IGrabable>(HitActor);
     IClickable* ClickableActor = Cast<IClickable>(HitActor);
 
-    if (GEngine && false)
+    if (GEngine && true)
     {
       GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, HitActor->GetFName().ToString());
     }
@@ -1194,7 +1195,7 @@ void ARootModellingPawn::OnBeginLeftFire_Implementation()
     }
     else if (ClickableActor != nullptr && Hit.Distance < MaxClickDistance)
     {
-      ClickableActor->OnClicked_Implementation(Hit.Location);
+      ClickableActor->OnClickSignal_Implementation(Hit.Location);
     }
   }
   // if no actor has been hit, we enter a different interaction mode. this is only relevant with an hmd

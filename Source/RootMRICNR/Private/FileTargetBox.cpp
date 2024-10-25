@@ -124,7 +124,7 @@ void AFileTargetBox::SetClickCallback(TFunction<void(void)> InCallbackRef)
   CallbackRef = InCallbackRef;
 }
 
-void AFileTargetBox::OnClicked_Implementation(FVector WorldPositionOfClick)
+void AFileTargetBox::OnClickSignal_Implementation(FVector WorldPositionOfClick)
 {
   InformBlueprint.Broadcast(this->FileID);
   HighlightTime = 2.f;

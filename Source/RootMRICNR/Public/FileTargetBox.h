@@ -59,7 +59,7 @@ public:
   FString FileName;
   float HighlightTime;
 
-  void OnClicked_Implementation(FVector WorldPositionOfClick) override;
+  void OnClickSignal_Implementation(FVector WorldPositionOfClick) override;
 
   void SetClickCallback(TFunction<void(void)> InCallbackRef);
 protected:

@@ -22,7 +22,7 @@ class IClickable
 public:
 	// function that will be called when clickable actor got clicked, and passed the world pos of the click
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = Gameplay)
-	void OnClicked(FVector WorldPositionOfClick);
+	void OnClickSignal(FVector WorldPositionOfClick);
 	
 
 };

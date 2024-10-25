@@ -90,7 +90,7 @@ void URootSegmentDual::OnGrabbed_Implementation()
 
 }
 
-void URootSegmentDual::OnClicked_Implementation(FVector WorldPositionOfClick)
+void URootSegmentDual::OnClickSignal_Implementation(FVector WorldPositionOfClick)
 {
 
 }
