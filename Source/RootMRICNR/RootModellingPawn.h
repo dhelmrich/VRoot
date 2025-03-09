@@ -17,6 +17,7 @@
 #include "RootModellingPawn.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FActionDelegate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FUndoDelegate);
 
 UENUM(BlueprintType)
 enum class EVRNavigationModes : uint8
@@ -115,11 +116,14 @@ public:
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnEndLeftFire();
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnRise(float Value);
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnSink(float Value);
+  
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnJumpAxisChange(float Value);
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void SplitRoot();
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void SelectRoot();
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void ToggleAutoAppend();
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void ToggleQuickMode();
-  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void ToggleHandVis();
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void ToggleHandVisDown();
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void ToggleHandVisUp();
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void ToggleModeLeft();
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void TakeScreenshot();
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void MoveSelectionUp();
@@ -127,6 +131,8 @@ public:
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void SelectEverything();
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnRotate(float Rate);
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void OnChangeHeight(float Value);
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void ToggleMoveDown();
+  UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void ToggleMoveUp();
 
 
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pawn") void ResetInteraction();
@@ -280,6 +286,7 @@ public:
   /************************************************************************/
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Navigation") FTransform ControllerDrag;
   UPROPERTY(VisibleAnywhere, BlueprintAssignable, Category = "Interaction") FActionDelegate ActionTaken;
+  UPROPERTY(VisibleAnywhere, BlueprintAssignable, Category = "Interaction") FUndoDelegate UndoTriggered;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Config, Category = "Interaction")
   float ArmLength = 80.f;
@@ -303,7 +310,10 @@ public:
   bool TouchInitialized = false;
   UPROPERTY()
   float TouchPadDeltaTime;
-
+  UPROPERTY()
+  int iJumpFlag = 0;
+  UPROPERTY()
+  bool RootSystemPanning = false;
 
   FCollisionObjectQueryParams Params;
   FCollisionQueryParams NewParams;
@@ -322,6 +332,10 @@ private:
   FTimerHandle TimerHandle;
 
 public:
+
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Draw")
+  bool ScaleNotPan = false;
+
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pawn") EVRNavigationModes NavigationMode = EVRNavigationModes::nav_mode_fly;
 protected:
   bool bHadToRemoveMouseSettings = false;
@@ -344,11 +358,11 @@ protected:
   // Use only when handling cross-device (PC, HMD, CAVE/ROLV) compatibility manually. HMD right motion controller.
   UPROPERTY() UMotionControllerComponent* HmdRightMotionController = nullptr;
 
-  UPROPERTY()
-  UXRDeviceVisualizationComponent* HmdLeftMotionControllerVisualization = nullptr;
-
-  UPROPERTY()
-  UXRDeviceVisualizationComponent* HmdRightMotionControllerVisualization = nullptr;
+ // UPROPERTY()
+ // UXRDeviceVisualizationComponent* HmdLeftMotionControllerVisualization = nullptr;
+ //
+ // UPROPERTY()
+ // UXRDeviceVisualizationComponent* HmdRightMotionControllerVisualization = nullptr;
 
 
   // PC: Camera, HMD: Camera, CAVE/ROLV: Shutter glasses.

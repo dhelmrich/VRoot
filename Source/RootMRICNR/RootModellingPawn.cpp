@@ -9,7 +9,6 @@
 #include "Kismet/GameplayStatics.h"
 
 
-#include "HeadMountedDisplayFunctionLibrary.h"
 #include "GrabbingBehaviorComponent.h"
 #include "Grabable.h"
 #include "Clickable.h"
@@ -33,7 +32,7 @@
 #include "Engine/BlockingVolume.h"
 
 #include "UnrealClient.h"
-#include "XRDeviceVisualizationComponent.h"
+//#include "XRDeviceVisualizationComponent.h"
 #include "GameFramework/PlayerStart.h"
 
 // ARootModellingPawn
@@ -89,17 +88,18 @@ ARootModellingPawn::ARootModellingPawn(const FObjectInitializer& ObjectInitializ
 
 
   HmdLeftMotionController = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("HmdLeftMotionController"));
-  HmdLeftMotionControllerVisualization = CreateDefaultSubobject<UXRDeviceVisualizationComponent>(TEXT("HmdLeftMotionControllerVisualization"));
-  HmdLeftMotionControllerVisualization->SetupAttachment(HmdLeftMotionController);
-  HmdLeftMotionControllerVisualization->SetVisibility(true,true);
+  //HmdLeftMotionControllerVisualization = CreateDefaultSubobject<UXRDeviceVisualizationComponent>(TEXT("HmdLeftMotionControllerVisualization"));
+  //HmdLeftMotionControllerVisualization->SetupAttachment(HmdLeftMotionController);
+  //HmdLeftMotionControllerVisualization->SetVisibility(true,true);
   HmdLeftMotionController->SetupAttachment(RootComponent);
   HmdLeftMotionController->SetTrackingSource(EControllerHand::Left);
+  //HmdLeftMotionController->SetShowDeviceModel(true);
   HmdLeftMotionController->SetVisibility(false);
 
   HmdRightMotionController = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("HmdRightMotionController"));
-  HmdRightMotionControllerVisualization = CreateDefaultSubobject<UXRDeviceVisualizationComponent>(TEXT("HmdRightMotionControllerVisualization"));
-  HmdRightMotionControllerVisualization->SetupAttachment(HmdRightMotionController);
-  HmdRightMotionControllerVisualization->SetVisibility(true, true);
+  //HmdRightMotionControllerVisualization = CreateDefaultSubobject<UXRDeviceVisualizationComponent>(TEXT("HmdRightMotionControllerVisualization"));
+  //HmdRightMotionControllerVisualization->SetupAttachment(HmdRightMotionController);
+  //HmdRightMotionControllerVisualization->SetVisibility(true, true);
   HmdRightMotionController->SetupAttachment(RootComponent);
   HmdRightMotionController->SetTrackingSource(EControllerHand::Right);
   //HmdRightMotionController->SetShowDeviceModel(true);
@@ -146,7 +146,7 @@ ARootModellingPawn::ARootModellingPawn(const FObjectInitializer& ObjectInitializ
     NewNodeIndicator->SetStaticMesh(CylAsset.Object);
     if (CylAssetMat.Succeeded())
     {
-      NewNodeIndicator->SetMaterial(0,CylAssetMat.Object);
+      NewNodeIndicator->SetMaterial(0, CylAssetMat.Object);
     }
   }
 
@@ -170,20 +170,20 @@ ARootModellingPawn::ARootModellingPawn(const FObjectInitializer& ObjectInitializ
   this->InteractionMode = EVRInteractionModes::int_mode_menu;
   NewParams.AddIgnoredActor(RegisteredDrawSpace);
   //INITALIZE MENU MODE WITH STATIC MESHES
-//  LiteralLeftHand = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Left Hand Model"));
-// 	LiteralLeftHand->RegisterComponent();
-// 	LiteralLeftHand->SetStaticMesh(HandOpen);
-// 	LiteralLeftHand->SetupAttachment(LeftHand);
-// 	LiteralLeftHand->SetRelativeLocation(FVector(50, 0, 0));
-// 	LiteralLeftHand->SetWorldScale3D(FVector(1, -1, 1));
-// 	LiteralLeftHand->SetVisibility(true);
-// 
-//   LiteralRightHand = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Right Hand Model"));
-// 	LiteralRightHand->RegisterComponent();
-// 	LiteralRightHand->SetStaticMesh(HandOpen);
-// 	LiteralRightHand->SetupAttachment(RightHand);
-//  LiteralRightHand->SetRelativeLocation(FVector(50, 0, 0));
-// 	LiteralRightHand->SetVisibility(true);
+  //  LiteralLeftHand = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Left Hand Model"));
+  // 	LiteralLeftHand->RegisterComponent();
+  // 	LiteralLeftHand->SetStaticMesh(HandOpen);
+  // 	LiteralLeftHand->SetupAttachment(LeftHand);
+  // 	LiteralLeftHand->SetRelativeLocation(FVector(50, 0, 0));
+  // 	LiteralLeftHand->SetWorldScale3D(FVector(1, -1, 1));
+  // 	LiteralLeftHand->SetVisibility(true);
+  // 
+  //   LiteralRightHand = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Right Hand Model"));
+  // 	LiteralRightHand->RegisterComponent();
+  // 	LiteralRightHand->SetStaticMesh(HandOpen);
+  // 	LiteralRightHand->SetupAttachment(RightHand);
+  //  LiteralRightHand->SetRelativeLocation(FVector(50, 0, 0));
+  // 	LiteralRightHand->SetVisibility(true);
 
 }
 
@@ -280,17 +280,17 @@ bool ARootModellingPawn::CheckIsHeadMountedModeActive()
 {
   // Aachen version of detecting HMD presence
  //return UHeadMountedDisplayFunctionLibrary::IsHeadMountedDisplayConnected();
-//  return UHeadMountedDisplayFunctionLibrary::IsHeadMountedDisplayEnabled();
+  //  return UHeadMountedDisplayFunctionLibrary::IsHeadMountedDisplayEnabled();
 
-//   IHeadMountedDisplay* hmd = nullptr;
-//   TSharedPtr<IStereoRendering, ESPMode::ThreadSafe> stereo = nullptr;
-//   if (GEngine && GEngine->XRSystem)
-//   {
-//     hmd = GEngine->XRSystem->GetHMDDevice();
-//     stereo = GEngine->XRSystem->GetStereoRenderingDevice();
-//     return hmd->IsHMDEnabled() && hmd->IsHMDConnected() && stereo->IsStereoEnabled();
-//   }
-//   return false;
+  //   IHeadMountedDisplay* hmd = nullptr;
+  //   TSharedPtr<IStereoRendering, ESPMode::ThreadSafe> stereo = nullptr;
+  //   if (GEngine && GEngine->XRSystem)
+  //   {
+  //     hmd = GEngine->XRSystem->GetHMDDevice();
+  //     stereo = GEngine->XRSystem->GetStereoRenderingDevice();
+  //     return hmd->IsHMDEnabled() && hmd->IsHMDConnected() && stereo->IsStereoEnabled();
+  //   }
+  //   return false;
   return bUseHMD;
 }
 
@@ -314,9 +314,10 @@ void ARootModellingPawn::BeginPlay()
   //}
 
   ScaleTimerDel.BindLambda([this]()
-  {
-    RegisteredDrawSpace->UpdateSections(Selection, bFixSegmentSize);
-  });
+    {
+      if (Selection.Num() > 0)
+        RegisteredDrawSpace->UpdateSections(Selection, bFixSegmentSize);
+    });
 
   if (CheckIsHeadMountedModeActive())
   {
@@ -327,7 +328,7 @@ void ARootModellingPawn::BeginPlay()
     UInputSettings::GetInputSettings()->RemoveAxisMapping(FInputAxisKeyMapping("MoveForward", EKeys::S));
     UInputSettings::GetInputSettings()->RemoveAxisMapping(FInputAxisKeyMapping("MoveRight", EKeys::A));
     UInputSettings::GetInputSettings()->RemoveAxisMapping(FInputAxisKeyMapping("MoveRight", EKeys::D));
-    
+
 
     HmdLeftMotionController->SetVisibility(ShowHMDControllers);
     HmdRightMotionController->SetVisibility(ShowHMDControllers);
@@ -338,7 +339,7 @@ void ARootModellingPawn::BeginPlay()
     CollisionComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
     auto PlayerStart = UGameplayStatics::GetActorOfClass(GetWorld(), APlayerStart::StaticClass());
-    
+
 
     //this->SetActorLocation({ 0,0,0 });
     //CameraComponent->SetWorldLocation({ 0,0,150.f });
@@ -362,24 +363,24 @@ void ARootModellingPawn::BeginPlay()
   }
 
 
-//   UInputSettings::GetInputSettings()->RemoveAxisMapping(FInputAxisKeyMapping("TurnRate", EKeys::MouseX));
-//   UInputSettings::GetInputSettings()->RemoveAxisMapping(FInputAxisKeyMapping("LookUpRate", EKeys::MouseY));
-// 
-//   HmdLeftMotionController->SetVisibility(ShowHMDControllers);
-//   HmdRightMotionController->SetVisibility(ShowHMDControllers);
-//   if (HmdTracker1->IsActive()) {
-//     HmdTracker1->SetVisibility(ShowHMDControllers);
-//   }
-//   if (HmdTracker2->IsActive()) {
-//     HmdTracker2->SetVisibility(ShowHMDControllers);
-//   }
-// 
-//   LeftHand->AttachToComponent(HmdLeftMotionController, FAttachmentTransformRules::SnapToTargetIncludingScale);
-//   RightHand->AttachToComponent(HmdRightMotionController, FAttachmentTransformRules::SnapToTargetIncludingScale);
-//   Head->AttachToComponent(GetCameraComponent(), FAttachmentTransformRules::SnapToTargetIncludingScale);
+  //   UInputSettings::GetInputSettings()->RemoveAxisMapping(FInputAxisKeyMapping("TurnRate", EKeys::MouseX));
+  //   UInputSettings::GetInputSettings()->RemoveAxisMapping(FInputAxisKeyMapping("LookUpRate", EKeys::MouseY));
+  // 
+  //   HmdLeftMotionController->SetVisibility(ShowHMDControllers);
+  //   HmdRightMotionController->SetVisibility(ShowHMDControllers);
+  //   if (HmdTracker1->IsActive()) {
+  //     HmdTracker1->SetVisibility(ShowHMDControllers);
+  //   }
+  //   if (HmdTracker2->IsActive()) {
+  //     HmdTracker2->SetVisibility(ShowHMDControllers);
+  //   }
+  // 
+  //   LeftHand->AttachToComponent(HmdLeftMotionController, FAttachmentTransformRules::SnapToTargetIncludingScale);
+  //   RightHand->AttachToComponent(HmdRightMotionController, FAttachmentTransformRules::SnapToTargetIncludingScale);
+  //   Head->AttachToComponent(GetCameraComponent(), FAttachmentTransformRules::SnapToTargetIncludingScale);
 
-  //In ADisplayClusterPawn::BeginPlay() input is disabled on all slaves, so we cannot react to button presses, e.g. on the flystick correctly.
-  //Therefore, we activate it again:
+    //In ADisplayClusterPawn::BeginPlay() input is disabled on all slaves, so we cannot react to button presses, e.g. on the flystick correctly.
+    //Therefore, we activate it again:
   UWorld* World = GetWorld();
   if (World)
   {
@@ -401,16 +402,16 @@ void ARootModellingPawn::BeginPlay()
   DrawIndicator->SetWorldScale3D(DefaultDrawIndicatorScale);
 
   TArray<AActor*> Found;
-  UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABlockingVolume::StaticClass(),Found);
+  UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABlockingVolume::StaticClass(), Found);
   NewParams.AddIgnoredActors(Found);
 
   NewParams.bTraceComplex = true;
   NewParams.AddIgnoredActor(this);
 
-  
 
-//   DrawIndicator->SetVisibility(false,false);
-//   PointIndicator->SetActive(false,true);
+
+  //   DrawIndicator->SetVisibility(false,false);
+  //   PointIndicator->SetActive(false,true);
 
 }
 
@@ -419,8 +420,8 @@ void ARootModellingPawn::EndPlay(const EEndPlayReason::Type EndPlayReason)
   Super::EndPlay(EndPlayReason);
   if (bHadToRemoveMouseSettings)
   {
-    UInputSettings::GetInputSettings()->AddAxisMapping(FInputAxisKeyMapping("TurnRate", EKeys::MouseX,1.f));
-    UInputSettings::GetInputSettings()->AddAxisMapping(FInputAxisKeyMapping("LookUpRate", EKeys::MouseY,-1.f));
+    UInputSettings::GetInputSettings()->AddAxisMapping(FInputAxisKeyMapping("TurnRate", EKeys::MouseX, 1.f));
+    UInputSettings::GetInputSettings()->AddAxisMapping(FInputAxisKeyMapping("LookUpRate", EKeys::MouseY, -1.f));
     UInputSettings::GetInputSettings()->AddAxisMapping(FInputAxisKeyMapping("MoveForward", EKeys::W, 1.f));
     UInputSettings::GetInputSettings()->AddAxisMapping(FInputAxisKeyMapping("MoveForward", EKeys::S, -1.f));
     UInputSettings::GetInputSettings()->AddAxisMapping(FInputAxisKeyMapping("MoveRight", EKeys::D, 1.f));
@@ -443,6 +444,7 @@ void ARootModellingPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputC
     PlayerInputComponent->BindAxis("Down", this, &ARootModellingPawn::OnSink);
     PlayerInputComponent->BindAxis("RotateAxis", this, &ARootModellingPawn::OnRotate);
     PlayerInputComponent->BindAxis("HeightAxis", this, &ARootModellingPawn::OnChangeHeight);
+    PlayerInputComponent->BindAxis("JumpAxis", this, &ARootModellingPawn::OnJumpAxisChange);
 
     PlayerInputComponent->BindAxis("RotateTouchX", this, &ARootModellingPawn::OnRotationTouchX);
     PlayerInputComponent->BindAxis("RotateTouchY", this, &ARootModellingPawn::OnRotationTouchY);
@@ -455,31 +457,39 @@ void ARootModellingPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputC
     PlayerInputComponent->BindAction("ForwardForce", IE_Released, this, &ARootModellingPawn::ForwardForce);
     PlayerInputComponent->BindAction("BackwardForce", IE_Released, this, &ARootModellingPawn::BackwardForce);
     //PlayerInputComponent->BindAction("ToggleDrawingAllowed", IE_Pressed, this, &ARootModellingPawn::SelectRoot);
-    PlayerInputComponent->BindAction("TogglePerfMeasurement",IE_Pressed, this, &ARootModellingPawn::TogglePerfMeasure);
+    PlayerInputComponent->BindAction("TogglePerfMeasurement", IE_Pressed, this, &ARootModellingPawn::TogglePerfMeasure);
     PlayerInputComponent->BindAction("Action5", IE_Pressed, this, &ARootModellingPawn::SelectEverything);
     // ToggleHandVis disabled in editor
     // TODO REMOVE THE MESSINESS OF THIS BY REMOVING OLD INTERACTION METHODS/SIGNALS
     PlayerInputComponent->BindAction("ResetInteraction", IE_Pressed, this, &ARootModellingPawn::ResetInteraction);
     PlayerInputComponent->BindAction("SplitRoot", IE_Pressed, this, &ARootModellingPawn::ToggleAutoAppend);
+    PlayerInputComponent->BindAction("UndoButton", IE_Pressed, this, &ARootModellingPawn::SplitRoot);
+    PlayerInputComponent->BindAction("ToggleRootSystemMovement", IE_Pressed, this, &ARootModellingPawn::ToggleMoveDown);
+    PlayerInputComponent->BindAction("ToggleRootSystemMovement", IE_Released, this, &ARootModellingPawn::ToggleMoveUp);
     PlayerInputComponent->BindAction("DeleteAction", IE_Pressed, this, &ARootModellingPawn::ToggleQuickMode);
-    PlayerInputComponent->BindAction("ToggleHandVis", IE_Pressed, this, &ARootModellingPawn::ToggleHandVis);
-    PlayerInputComponent->BindAction("SwitchSelectionMode",IE_Pressed,this,&ARootModellingPawn::ToggleModeLeft);
-    PlayerInputComponent->BindAction("RootSystemNavUp",IE_Pressed,this,&ARootModellingPawn::MoveSelectionUp);
-    PlayerInputComponent->BindAction("RootSystemNavDown",IE_Pressed,this,&ARootModellingPawn::MoveSelectionDown);
+    PlayerInputComponent->BindAction("ToggleHandVis", IE_Pressed, this, &ARootModellingPawn::ToggleHandVisDown);
+    PlayerInputComponent->BindAction("ToggleHandVis", IE_Released, this, &ARootModellingPawn::ToggleHandVisUp);
+    PlayerInputComponent->BindAction("SwitchSelectionMode", IE_Pressed, this, &ARootModellingPawn::ToggleModeLeft);
+    PlayerInputComponent->BindAction("RootSystemNavUp", IE_Pressed, this, &ARootModellingPawn::MoveSelectionUp);
+    PlayerInputComponent->BindAction("RootSystemNavDown", IE_Pressed, this, &ARootModellingPawn::MoveSelectionDown);
   }
 }
 
 void ARootModellingPawn::OnScale_Implementation(float Rate)
 {
-  if(FMath::Abs(Rate) > 0.0001f)
+  if(this->RootSystemPanning)
   {
-    double chg = 1.0 + ((Rate < 0.0) ? Rate * 0.00025 : Rate * 0.0005);
+    RegisteredDrawSpace->AddActorWorldOffset(FVector(0,Rate,0));
+  }
+  else if (FMath::Abs(Rate) > 0.4f)
+  {
+    double chg = 1.0 + ((Rate < 0.0) ? Rate * 0.0025 : Rate * 0.005);
     for (AOverlapTransform* ovlp : Selection)
     {
       ovlp->SetActorRelativeScale3D(ovlp->GetActorRelativeScale3D() * chg);
     }
     GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
-    GetWorld()->GetTimerManager().SetTimer(TimerHandle, ScaleTimerDel,1,false, 1.f);
+    GetWorld()->GetTimerManager().SetTimer(TimerHandle, ScaleTimerDel, 1, false, 1.f);
   }
 }
 
@@ -544,14 +554,14 @@ void ARootModellingPawn::SelectRoot_Implementation()
   bCanDraw = !bCanDraw;
   if (GEngine && false)
   {
-    GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Can Draw: %d"),bCanDraw));
+    GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Can Draw: %d"), (int)bCanDraw));
   }
 
 }
 
 void ARootModellingPawn::SplitRoot_Implementation()
 {
-
+  UndoTriggered.Broadcast();
 }
 
 void ARootModellingPawn::ToggleAutoAppend_Implementation()
@@ -564,14 +574,14 @@ void ARootModellingPawn::ToggleAutoAppend_Implementation()
       GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Selection is not two"));
     }
   }
-  else if(Selection[0]->RootNum != Selection[1]->RootNum || FGenericPlatformMath::Abs(Selection[0]->PlaceSegment - Selection[1]->PlaceSegment) != 1)
+  else if (Selection[0]->RootNum != Selection[1]->RootNum || FGenericPlatformMath::Abs(Selection[0]->PlaceSegment - Selection[1]->PlaceSegment) != 1)
   {
     if (Selection[0]->PlaceSegment == 1 && Selection[0]->Predecessor == Selection[1]->RootNum)
     {
       AOverlapTransform* Depend = nullptr;
       for (AOverlapTransform* chck : RegisteredDrawSpace->FindDependencies(Selection[1]))
       {
-        if (chck->RootNum == Selection[0]->RootNum && chck->PlaceSegment==0)
+        if (chck->RootNum == Selection[0]->RootNum && chck->PlaceSegment == 0)
         {
           Depend = chck;
         }
@@ -646,7 +656,7 @@ void ARootModellingPawn::ToggleQuickMode_Implementation()
   Selection.Empty();
   MoveMeta->SetActorHiddenInGame(true);
   MoveMeta->SetActorEnableCollision(false);
-  if(!bDemoVersion)
+  if (!bDemoVersion)
   {
     DiaMeta->SetActorHiddenInGame(true);
     DiaMeta->SetActorEnableCollision(false);
@@ -655,50 +665,47 @@ void ARootModellingPawn::ToggleQuickMode_Implementation()
   ActionTaken.Broadcast();
 }
 
-void ARootModellingPawn::ToggleHandVis_Implementation()
+void ARootModellingPawn::ToggleHandVisDown_Implementation()
 {
-
-  if (GEngine && false)
-  {
-    GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Black, TEXT("Toggled Hand vis (not implemented yet)"));
-  }
-
-
-
+  this->ScaleNotPan = true;
+}
+void ARootModellingPawn::ToggleHandVisUp_Implementation()
+{
+  this->ScaleNotPan = false;
 }
 
 void ARootModellingPawn::ToggleModeLeft_Implementation()
 {
   SelectionMode = EVRSelectionMode::sel_mode_tog;
- //   switch (SelectionMode)
- //   {
- //   case EVRSelectionMode::sel_mode_add:
- //     SelectionMode = EVRSelectionMode::sel_mode_rem;
- //     if(GEngine && true)
- //     GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Black, TEXT("SelectionMode==Remove"));
- //     break;
- //   case EVRSelectionMode::sel_mode_rem:
- //     SelectionMode = EVRSelectionMode::sel_mode_tog;
- //     if (GEngine && false)
- //     GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Black, TEXT("SelectionMode==Toggle"));
- //     break;
- //   case EVRSelectionMode::sel_mode_tog:
- //     SelectionMode = EVRSelectionMode::sel_mode_add;
- //     if (GEngine && false)
- //     GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Black, TEXT("SelectionMode==Add"));
- //     break;
- //   default:
- //     break;
- //   }
+  //   switch (SelectionMode)
+  //   {
+  //   case EVRSelectionMode::sel_mode_add:
+  //     SelectionMode = EVRSelectionMode::sel_mode_rem;
+  //     if(GEngine && true)
+  //     GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Black, TEXT("SelectionMode==Remove"));
+  //     break;
+  //   case EVRSelectionMode::sel_mode_rem:
+  //     SelectionMode = EVRSelectionMode::sel_mode_tog;
+  //     if (GEngine && false)
+  //     GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Black, TEXT("SelectionMode==Toggle"));
+  //     break;
+  //   case EVRSelectionMode::sel_mode_tog:
+  //     SelectionMode = EVRSelectionMode::sel_mode_add;
+  //     if (GEngine && false)
+  //     GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Black, TEXT("SelectionMode==Add"));
+  //     break;
+  //   default:
+  //     break;
+  //   }
 }
 
 void ARootModellingPawn::TakeScreenshot_Implementation()
 {
-//   ACameraActor* screenshotcamera = GetWorld()->SpawnActor<ACameraActor>(ACameraActor::StaticClass(),Head->GetComponentTransform(), FActorSpawnParameters());
-// 
-//   auto config = FHighResScreenshotConfig();
-// 
-//   screenshotcamera->Destroy();
+  //   ACameraActor* screenshotcamera = GetWorld()->SpawnActor<ACameraActor>(ACameraActor::StaticClass(),Head->GetComponentTransform(), FActorSpawnParameters());
+  // 
+  //   auto config = FHighResScreenshotConfig();
+  // 
+  //   screenshotcamera->Destroy();
 }
 
 void ARootModellingPawn::ToggleFixSegmentSize(bool bNewSegmentPolicy)
@@ -716,7 +723,7 @@ void ARootModellingPawn::HighlightEndingDraw(UPrimitiveComponent* HitComp, AActo
     {
       OtherCasted->HighLight(1);
     }
-    else if(SelectionMode != EVRSelectionMode::sel_mode_add)
+    else if (SelectionMode != EVRSelectionMode::sel_mode_add)
     {
       OtherCasted->HighLight(-1);
     }
@@ -735,12 +742,12 @@ void ARootModellingPawn::StopHighlightEndingDraw(UPrimitiveComponent* HitComp, A
 void ARootModellingPawn::SelectionAdd(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
   TArray<AOverlapTransform*>::SizeType index = 0;
-  AOverlapTransform* OtherCasted = Cast< AOverlapTransform > (OtherActor);
-  if(OtherCasted)
+  AOverlapTransform* OtherCasted = Cast< AOverlapTransform >(OtherActor);
+  if (OtherCasted)
   {
     if (Selection.Find(OtherCasted, index))
     {
-      if(!bAddToSelection)
+      if (!bAddToSelection)
       {
         Selection.RemoveAt(index);
         OtherCasted->HighLight(0);
@@ -786,7 +793,7 @@ void ARootModellingPawn::TogglePerfMeasure()
 
 void ARootModellingPawn::OnBeginFire_Implementation()
 {
-  if(bCanDraw && (!RegisteredDrawSpace->HasRoot() || Selection.Num() > 0))
+  if (bCanDraw && (!RegisteredDrawSpace->HasRoot() || Selection.Num() > 0))
     bRightFire = true;
   else
   {
@@ -813,7 +820,7 @@ void ARootModellingPawn::OnBeginFire_Implementation()
   {
     GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Fire Right"));
   }
-  
+
   TArray<AActor*> OverlappingEndings;
   this->DrawIndicator->GetOverlappingActors(OverlappingEndings, AOverlapTransform::StaticClass());
   if (OverlappingEndings.Num() > 0)
@@ -829,14 +836,14 @@ void ARootModellingPawn::OnBeginFire_Implementation()
       switch (SelectionMode)
       {
       case EVRSelectionMode::sel_mode_add:
-          ovl->bTemporarilyVisible = false;
-         Selection.AddUnique(ovl);
-          ovl->Selected(true);
-          RegisteredDrawSpace->SyncRadius(ovl);
+        ovl->bTemporarilyVisible = false;
+        Selection.AddUnique(ovl);
+        ovl->Selected(true);
+        RegisteredDrawSpace->SyncRadius(ovl);
         break;
       case EVRSelectionMode::sel_mode_rem:
         Selection.Remove(ovl);
-          ovl->Selected(false);
+        ovl->Selected(false);
         break;
       case EVRSelectionMode::sel_mode_tog:
         ToggleSelection(ovlpact);
@@ -850,13 +857,13 @@ void ARootModellingPawn::OnBeginFire_Implementation()
       // and the spheres always resume their original position
       MoveMeta->SetActorHiddenInGame(false);
       MoveMeta->SetActorEnableCollision(true);
-      if(!bDemoVersion)
+      if (!bDemoVersion)
       {
         DiaMeta->SetActorHiddenInGame(false);
         DiaMeta->SetActorEnableCollision(true);
       }
-//       MoveMeta->SetActorLocation({});
-//       DiaMeta->SetActorLocation({});
+      //       MoveMeta->SetActorLocation({});
+      //       DiaMeta->SetActorLocation({});
       bWidgetsVisible = true;
 
       // TODO HERE NEXT
@@ -865,7 +872,7 @@ void ARootModellingPawn::OnBeginFire_Implementation()
     {
       MoveMeta->SetActorHiddenInGame(true);
       MoveMeta->SetActorEnableCollision(false);
-      if(!bDemoVersion)
+      if (!bDemoVersion)
       {
         DiaMeta->SetActorHiddenInGame(true);
         DiaMeta->SetActorEnableCollision(false);
@@ -879,11 +886,11 @@ void ARootModellingPawn::OnBeginFire_Implementation()
     // nothing because we cannot draw
     bRightFire = false;
   }
-  else if(DrawMode == EVRDrawModes::draw_mode_free && bRightFire)
+  else if (DrawMode == EVRDrawModes::draw_mode_free && bRightFire)
   {
     //OriginPosition = DrawIndicator->GetComponentTransform();
-    
-    
+
+
     if (Selection.Num() == 1 && bRightFire)
     {
       //if(Selection[0]->RootNum == 1 && Selection[0]->PlaceSegment == 0)
@@ -926,12 +933,12 @@ void ARootModellingPawn::OnBeginFire_Implementation()
     DrawConnection->SetWorldLocation(DrawIndicator->GetComponentLocation());
     NewNodeIndicator->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
     NewNodeIndicator->SetWorldLocation(OriginPosition.GetLocation());
-    NewNodeIndicator->SetVisibility(true,true);
+    NewNodeIndicator->SetVisibility(true, true);
     DrawMode = EVRDrawModes::draw_mode_drag;
     return;
   }
 
-  
+
 
 }
 
@@ -945,9 +952,28 @@ void ARootModellingPawn::OnRotate_Implementation(float Rate)
 
 void ARootModellingPawn::OnChangeHeight_Implementation(float Value)
 {
-  FVector NewLoc = RegisteredDrawSpace->GetActorLocation();
-  NewLoc.Z += Value;
-  RegisteredDrawSpace->SetActorLocation(NewLoc);
+  if (ScaleNotPan && Value != 0.f)
+  {
+    FVector NewScale = RegisteredDrawSpace->GetActorScale3D();
+    NewScale += FVector(Value, Value, Value) * 0.5;
+    RegisteredDrawSpace->SetActorScale3D(NewScale);
+  }
+  else
+  {
+    FVector NewLoc = RegisteredDrawSpace->GetActorLocation();
+    NewLoc.Z += Value;
+    RegisteredDrawSpace->SetActorLocation(NewLoc);
+  }
+}
+
+void ARootModellingPawn::ToggleMoveDown_Implementation()
+{
+  this->RootSystemPanning = true;
+}
+
+void ARootModellingPawn::ToggleMoveUp_Implementation()
+{
+  this->RootSystemPanning = false;
 }
 
 void ARootModellingPawn::ToggleSelection(AActor* Overlappor)
@@ -973,18 +999,18 @@ void ARootModellingPawn::OnEndFire_Implementation()
   {
     GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Fire Right End"));
   }
-  if(bRightFire == true)
+  if (bRightFire == true)
     bRightFire = false;
   else
     return;
 
-  if(DrawMode == EVRDrawModes::draw_mode_drag)
+  if (DrawMode == EVRDrawModes::draw_mode_drag)
   {
     NewNodeIndicator->SetVisibility(false, true);
     NewNodeIndicator->AttachToComponent(RightHand, FAttachmentTransformRules::SnapToTargetIncludingScale);
     FTransform CopyTransform = DrawIndicator->GetComponentTransform();
-    CopyTransform.SetScale3D({RegisteredDrawSpace->CurrentStoredRadius,RegisteredDrawSpace->CurrentStoredRadius,RegisteredDrawSpace->CurrentStoredRadius});
-    AOverlapTransform*  Newselect = 
+    CopyTransform.SetScale3D({ RegisteredDrawSpace->CurrentStoredRadius,RegisteredDrawSpace->CurrentStoredRadius,RegisteredDrawSpace->CurrentStoredRadius });
+    AOverlapTransform* Newselect =
       RegisteredDrawSpace->MakeSegmentFromIndicator(CopyTransform);
     DrawIndicator->AttachToComponent(RightHand, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
     DrawIndicator->SetRelativeLocation(DefaultDrawIndicatorPosition);
@@ -992,7 +1018,7 @@ void ARootModellingPawn::OnEndFire_Implementation()
     if (Selection.Num() == 0)
     {
       bWidgetsVisible = true;
-      if(!bDemoVersion)
+      if (!bDemoVersion)
       {
         DiaMeta->SetActorHiddenInGame(false);
         DiaMeta->SetActorEnableCollision(true);
@@ -1000,11 +1026,11 @@ void ARootModellingPawn::OnEndFire_Implementation()
       MoveMeta->SetActorHiddenInGame(false);
       MoveMeta->SetActorEnableCollision(true);
     }
-    for(auto* s : Selection) s->Selected(false);
+    for (auto* s : Selection) s->Selected(false);
     Selection.Empty();
     Newselect->Selected(true);
     Newselect->SetTemporary(false);
-    if(IsValid(Newselect))
+    if (IsValid(Newselect))
       Selection.Add(Newselect);
     // we NEED the new actor that is spawned for selection here!
     // then we add that to the selection and reset the draw mode
@@ -1057,7 +1083,7 @@ void ARootModellingPawn::OnBeginLeftFire_Implementation()
   // select only when draw mode free otherwise go on with drawing
   // reset button when drawing does reset the drawing process
   // otherwise reset is resetti spaghetti seletti
-  if(bRightFire == true || DrawMode != EVRDrawModes::draw_mode_free)
+  if (bRightFire == true || DrawMode != EVRDrawModes::draw_mode_free)
     return;
   bLeftFire = true;
 
@@ -1071,36 +1097,36 @@ void ARootModellingPawn::OnBeginLeftFire_Implementation()
   AActor* HitActor;
   TArray<FHitResult> MHits;
   //if hit was not found return  
-  FVector origin,extends;
-//   RegisteredDrawSpace->GetActorBounds(false,origin,extends);
-//   if (UKismetMathLibrary::IsPointInBox(LeftHand->GetComponentLocation(), origin, extends))
-//   {
-//     NewParams.AddIgnoredActor(RegisteredDrawSpace);
-//   }
-  
+  FVector origin, extends;
+  //   RegisteredDrawSpace->GetActorBounds(false,origin,extends);
+  //   if (UKismetMathLibrary::IsPointInBox(LeftHand->GetComponentLocation(), origin, extends))
+  //   {
+  //     NewParams.AddIgnoredActor(RegisteredDrawSpace);
+  //   }
+
   if ((!GetWorld()->LineTraceMultiByObjectType(MHits, Start, End, Params, NewParams) || MHits.Num() == 0) && bUseHMD)
   {
-      ControllerDrag = LeftHand->GetComponentTransform();
-      auto vec = LeftHand->GetForwardVector();
-      float zcomp = LeftHand->GetForwardVector().Z;
-      float planecomp = LeftHand->GetForwardVector() | FVector(0, 0, 1);
-	  UE_LOG(LogTemp, Warning, TEXT("Trigger went in the direction of (%d,%d,%d) with projection %d"), vec.X, vec.Y, vec.Z, planecomp);
-	  this->RegisteredDrawSpace->GetActorBounds(false, DrawOrigin, this->DrawBounds, false);
-      if (planecomp < 0.1)
-      {
-        NavigationMode = EVRNavigationModes::nav_mode_zoom;
-        DrawScale = RegisteredDrawSpace->GetActorScale3D();
-        DrawOrigin = RegisteredDrawSpace->GetActorLocation();
-        // TODO DRAW BOUNDS
-        DrawForward = LeftHand->GetForwardVector();
-      }
-      else if (planecomp > 0.9)
-      {
-		    NavigationMode = EVRNavigationModes::nav_mode_scroll;
-        DrawOrigin = RegisteredDrawSpace->GetActorLocation();
-      }
+    ControllerDrag = LeftHand->GetComponentTransform();
+    auto vec = LeftHand->GetForwardVector();
+    float zcomp = LeftHand->GetForwardVector().Z;
+    float planecomp = LeftHand->GetForwardVector() | FVector(0, 0, 1);
+    //UE_LOG(LogTemp, Warning, TEXT("Trigger went in the direction of (%d,%d,%d) with projection %d"), vec.X, vec.Y, vec.Z, planecomp);
+    this->RegisteredDrawSpace->GetActorBounds(false, DrawOrigin, this->DrawBounds, false);
+    //if (planecomp < 0.1)
+    //{
+    //  NavigationMode = EVRNavigationModes::nav_mode_zoom;
+    //  DrawScale = RegisteredDrawSpace->GetActorScale3D();
+    //  DrawOrigin = RegisteredDrawSpace->GetActorLocation();
+    //  // TODO DRAW BOUNDS
+    //  DrawForward = LeftHand->GetForwardVector();
+    //}
+    //else if (planecomp > 0.9)
+    //{
+    //  NavigationMode = EVRNavigationModes::nav_mode_scroll;
+    //  DrawOrigin = RegisteredDrawSpace->GetActorLocation();
+    //}
   }
-  else if(MHits.Num() > 0)
+  else if (MHits.Num() > 0)
   {
     for (const FHitResult& TfoB : MHits)
     {
@@ -1203,7 +1229,7 @@ void ARootModellingPawn::OnBeginLeftFire_Implementation()
 void ARootModellingPawn::OnEndLeftFire_Implementation()
 {
   bLeftFire = false;
-  if(bUseHMD)
+  if (bUseHMD)
     NavigationMode = EVRNavigationModes::nav_mode_none;
   // if we didnt grab anyone there is no need to release
   if (GrabbedActor == nullptr)
@@ -1230,8 +1256,8 @@ void ARootModellingPawn::OnEndLeftFire_Implementation()
       Depend->HighLight(0);
     }
     Dependend.Append(Selection);
-    RegisteredDrawSpace->UpdateSections(Dependend,bFixSegmentSize,bAdjustRadiusDuringDrawing);
-    if(GrabbedActor == DiaMeta)
+    RegisteredDrawSpace->UpdateSections(Dependend, bFixSegmentSize, bAdjustRadiusDuringDrawing);
+    if (GrabbedActor == DiaMeta)
       ZeroHighlight->SetActorHiddenInGame(true);
     Dependend.Empty();
     ActionTaken.Broadcast();
@@ -1268,7 +1294,7 @@ void ARootModellingPawn::ResetInteraction_Implementation()
   }
   else if (Selection.Num() > 0)
   {
-    for(AOverlapTransform* act : Selection)
+    for (AOverlapTransform* act : Selection)
     {
       act->Selected(false);
     }
@@ -1276,11 +1302,11 @@ void ARootModellingPawn::ResetInteraction_Implementation()
 
     MoveMeta->SetActorHiddenInGame(true);
     MoveMeta->SetActorEnableCollision(false);
-      if(!bDemoVersion)
-      {
-        DiaMeta->SetActorHiddenInGame(true);
-        DiaMeta->SetActorEnableCollision(false);
-      }
+    if (!bDemoVersion)
+    {
+      DiaMeta->SetActorHiddenInGame(true);
+      DiaMeta->SetActorEnableCollision(false);
+    }
     bWidgetsVisible = false;
   }
 }
@@ -1288,7 +1314,7 @@ void ARootModellingPawn::ResetInteraction_Implementation()
 void ARootModellingPawn::Tick(float DeltaSeconds)
 {
   Super::Tick(DeltaSeconds);
-  if(!(DrawIndicator && RegisteredDrawSpace))
+  if (!(DrawIndicator && RegisteredDrawSpace))
     return;
 
   // Scene Update not relevant for Tick() logic
@@ -1298,22 +1324,22 @@ void ARootModellingPawn::Tick(float DeltaSeconds)
     FVector DistVec = Head->GetComponentLocation() - LookAtTransform.GetLocation();
     DistVec = FVector::CrossProduct(DistVec, RegisteredDrawSpace->GetActorUpVector());
     DistVec /= DistVec.Size();
-    if(bDemoVersion)
+    if (bDemoVersion)
     {
-    MoveMeta->SetActorLocation(LookAtTransform.GetLocation()
-      //+ (100.f + RegisteredDrawSpace->GetActorScale3D().Y) * DistVec
-      + (20.f) * DistVec);
+      MoveMeta->SetActorLocation(LookAtTransform.GetLocation()
+        //+ (100.f + RegisteredDrawSpace->GetActorScale3D().Y) * DistVec
+        + (20.f) * DistVec);
     }
     else
     {
       MoveMeta->SetActorLocation(LookAtTransform.GetLocation()
-      //+ (100.f + RegisteredDrawSpace->GetActorScale3D().Y) * DistVec
-      + (20.f) * DistVec
-      + RegisteredDrawSpace->GetActorUpVector() * 20.f);
+        //+ (100.f + RegisteredDrawSpace->GetActorScale3D().Y) * DistVec
+        + (20.f) * DistVec
+        + RegisteredDrawSpace->GetActorUpVector() * 20.f);
       DiaMeta->SetActorLocation(LookAtTransform.GetLocation()
-      //+ (100.f + RegisteredDrawSpace->GetActorScale3D().Y) * DistVec
-      + (20.f) * DistVec
-      - RegisteredDrawSpace->GetActorUpVector() * 20.f);
+        //+ (100.f + RegisteredDrawSpace->GetActorScale3D().Y) * DistVec
+        + (20.f) * DistVec
+        - RegisteredDrawSpace->GetActorUpVector() * 20.f);
       DiaMeta->SetActorRotation((UKismetMathLibrary::FindLookAtRotation(DiaMeta->GetActorLocation(), Head->GetComponentLocation()).Quaternion())
         * FQuat::FindBetweenVectors({ 1,0,0 }, { 0,-1,0 }));
     }
@@ -1323,8 +1349,8 @@ void ARootModellingPawn::Tick(float DeltaSeconds)
       * FQuat::FindBetweenVectors({ 1,0,0 }, { 0,-1,0 }));
 
 
-//     MoveMeta->SetActorLocation((Head->GetForwardVector() * 500.f) + (Head->GetRightVector() * -200.f) + Head->GetComponentLocation() + (Head->GetUpVector() * 50));
-//     DiaMeta->SetActorLocation((Head->GetForwardVector() * 500.f) + (Head->GetRightVector() * -200.f) + Head->GetComponentLocation() + (Head->GetUpVector() * -50));
+    //     MoveMeta->SetActorLocation((Head->GetForwardVector() * 500.f) + (Head->GetRightVector() * -200.f) + Head->GetComponentLocation() + (Head->GetUpVector() * 50));
+    //     DiaMeta->SetActorLocation((Head->GetForwardVector() * 500.f) + (Head->GetRightVector() * -200.f) + Head->GetComponentLocation() + (Head->GetUpVector() * -50));
   }
 
   if (__x && __y)
@@ -1368,9 +1394,9 @@ void ARootModellingPawn::Tick(float DeltaSeconds)
     FVector PivotDistance = RegisteredDrawSpace->HightlightActor->GetRelativeScale3D() / 2.f;
     FVector distance = ControllerDrag.GetLocation() - LeftHand->GetComponentLocation();
     float projected = (distance | DrawForward) / ArmLength;
-    projected = (projected < 0.f) ? 0.5f*projected : projected;
+    projected = (projected < 0.f) ? 0.5f * projected : projected;
     projected = (projected * (DrawScale.X)) + (DrawScale.X);
-    projected = FGenericPlatformMath::Max(0.05f,FGenericPlatformMath::Min(20.f,projected));
+    projected = FGenericPlatformMath::Max(0.05f, FGenericPlatformMath::Min(20.f, projected));
     RegisteredDrawSpace->SetActorScale3D(FVector(projected, projected, projected));
     //RegisteredDrawSpace->SetActorLocation((projected - 1.f)*PivotDistance);
   }
@@ -1378,7 +1404,7 @@ void ARootModellingPawn::Tick(float DeltaSeconds)
   {
     FVector distance = ControllerDrag.GetLocation() - LeftHand->GetComponentLocation();
     float projected = distance.Z / ArmLength * DrawBounds.Z;
-    RegisteredDrawSpace->SetActorLocation(DrawOrigin + FVector(0.f,0.f,-projected));
+    RegisteredDrawSpace->SetActorLocation(DrawOrigin + FVector(0.f, 0.f, -projected));
   }
 
   else if (GrabbedActor != nullptr)
@@ -1395,58 +1421,58 @@ void ARootModellingPawn::Tick(float DeltaSeconds)
       FVector FromOriginToIntersection = Intersection - AttachmentPoint;
       FVector NewPosition = FVector::DotProduct(FromOriginToIntersection, ConstraintAxis) * ConstraintAxis;
       float zsize = ZeroHighlight->GetActorScale().X;
-      float distance = (DiaMeta->GetActorLocation() - ZeroHighlight->GetActorLocation()).Size() - (0.5f*zsize);
-      FVector newscale2 = FVector(distance/ zsize + 1, distance/ zsize + 1, distance/ zsize + 1);
-      float comp = (FVector::DotProduct({0.33,0.33,0.33},NewPosition) / 10.f);
+      float distance = (DiaMeta->GetActorLocation() - ZeroHighlight->GetActorLocation()).Size() - (0.5f * zsize);
+      FVector newscale2 = FVector(distance / zsize + 1, distance / zsize + 1, distance / zsize + 1);
+      float comp = (FVector::DotProduct({ 0.33,0.33,0.33 }, NewPosition) / 10.f);
       float ocomp = comp;
       float sign = ((comp) < 0.f) ? -10.f : 10.f;
       comp = FGenericPlatformMath::Abs(comp);
       FVector newscale;
-//       if (GEngine && false)
-//       {
-//         GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("All: %f, %f, %f, %f"), comp, sign, (1.f / FGenericPlatformMath::Log2(2.f + comp)), FGenericPlatformMath::Log2(2.f + comp)));
-//       }
+      //       if (GEngine && false)
+      //       {
+      //         GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("All: %f, %f, %f, %f"), comp, sign, (1.f / FGenericPlatformMath::Log2(2.f + comp)), FGenericPlatformMath::Log2(2.f + comp)));
+      //       }
       for (AOverlapTransform* ovlp : Selection)
       {
-        
-//         if (sign < -0001.f)
-//         {
-//           newscale = ovlp->OriginScale;
-// //           if (GEngine && false)
-// //           {
-// //             GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, newscale.ToString());
-// //           }
-//           newscale *= (1.5f / FGenericPlatformMath::Log2(2.f + comp));
-// //           if (GEngine && false)
-// //           {
-// //             GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("All: %f"), (1.f / FGenericPlatformMath::Log2(2.f + comp))));
-// //           }
-// //           if (GEngine && false)
-// //           {
-// //             GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, newscale.ToString());
-// //           }
-//         }
-//         else if (sign > 0.001f)
-//         {
-//           newscale = ovlp->OriginScale * (FGenericPlatformMath::Log2(4.f + comp) - 1.f);
-//         }
-//         newscale = newscale.GetAbs();
-        //newscale = newscale.GetClampedToSize(0.001,1000);
+
+        //         if (sign < -0001.f)
+        //         {
+        //           newscale = ovlp->OriginScale;
+        // //           if (GEngine && false)
+        // //           {
+        // //             GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, newscale.ToString());
+        // //           }
+        //           newscale *= (1.5f / FGenericPlatformMath::Log2(2.f + comp));
+        // //           if (GEngine && false)
+        // //           {
+        // //             GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("All: %f"), (1.f / FGenericPlatformMath::Log2(2.f + comp))));
+        // //           }
+        // //           if (GEngine && false)
+        // //           {
+        // //             GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, newscale.ToString());
+        // //           }
+        //         }
+        //         else if (sign > 0.001f)
+        //         {
+        //           newscale = ovlp->OriginScale * (FGenericPlatformMath::Log2(4.f + comp) - 1.f);
+        //         }
+        //         newscale = newscale.GetAbs();
+                //newscale = newscale.GetClampedToSize(0.001,1000);
         ovlp->SetActorRelativeScale3D(newscale2 * ovlp->OriginScale);
       }
       for (AOverlapTransform* ovlp : Dependend)
       {
-//         if (sign < -0001.f)
-//         {
-//           newscale = ovlp->OriginScale;
-//           newscale *= (2.f / FGenericPlatformMath::Log2(4.f + comp));
-//         }
-//         else if (sign > 0.001f)
-//         {
-//           newscale = ovlp->OriginScale * (FGenericPlatformMath::Log2(8.f + comp) - 2.f);
-//         }
-//         newscale = newscale.GetAbs();
-        ovlp->SetActorRelativeScale3D(newscale2* ovlp->OriginScale);
+        //         if (sign < -0001.f)
+        //         {
+        //           newscale = ovlp->OriginScale;
+        //           newscale *= (2.f / FGenericPlatformMath::Log2(4.f + comp));
+        //         }
+        //         else if (sign > 0.001f)
+        //         {
+        //           newscale = ovlp->OriginScale * (FGenericPlatformMath::Log2(8.f + comp) - 2.f);
+        //         }
+        //         newscale = newscale.GetAbs();
+        ovlp->SetActorRelativeScale3D(newscale2 * ovlp->OriginScale);
       }
       return;
     }
@@ -1468,17 +1494,17 @@ void ARootModellingPawn::Tick(float DeltaSeconds)
   // if this is an annoyance we change it but usually it should be fine because
   // this is really only for a completely new root
   else if (DrawMode == EVRDrawModes::draw_mode_free && !bFiring)
-    DrawIndicator->SetWorldRotation(FQuat::FindBetweenVectors({1.f,0.f,0.f},
-        -RegisteredDrawSpace->GetActorUpVector()));
+    DrawIndicator->SetWorldRotation(FQuat::FindBetweenVectors({ 1.f,0.f,0.f },
+      -RegisteredDrawSpace->GetActorUpVector()));
   else if (DrawMode == EVRDrawModes::draw_mode_drag)
   {
     FVector diff = DrawIndicator->GetComponentLocation() - OriginPosition.GetLocation();
     DrawIndicator->SetWorldRotation(diff.ToOrientationRotator());
     DrawConnection->SetBeamSourcePoint(0, DrawIndicator->GetRelativeLocation(), 0);
     DrawConnection->SetBeamEndPoint(0, (OriginPosition * (GetActorTransform().Inverse())).GetLocation());
-    NewNodeIndicator->SetWorldScale3D({diff.Size(), RegisteredDrawSpace->CurrentStoredRadius,RegisteredDrawSpace->CurrentStoredRadius});
+    NewNodeIndicator->SetWorldScale3D({ diff.Size(), RegisteredDrawSpace->CurrentStoredRadius,RegisteredDrawSpace->CurrentStoredRadius });
     NewNodeIndicator->SetWorldRotation(UKismetMathLibrary::FindLookAtRotation(
-    OriginPosition.GetLocation(),
+      OriginPosition.GetLocation(),
       DrawIndicator->GetComponentLocation()).Quaternion());
 
     if (bFixMaxLength && diff.Size() > this->fMaximumSegmentLength)
@@ -1496,7 +1522,7 @@ void ARootModellingPawn::Tick(float DeltaSeconds)
 
 void ARootModellingPawn::OnRotationTouchX_Implementation(float Value)
 {
-  if(Value != 0.f && !__x)
+  if (Value != 0.f && !__x)
   {
     TouchInput.X = Value;
     __x = true;
@@ -1505,7 +1531,7 @@ void ARootModellingPawn::OnRotationTouchX_Implementation(float Value)
 
 void ARootModellingPawn::OnRotationTouchY_Implementation(float Value)
 {
-  if(Value != 0.f && !__y)
+  if (Value != 0.f && !__y)
   {
     TouchInput.Y = Value;
     __y = true;
@@ -1514,12 +1540,12 @@ void ARootModellingPawn::OnRotationTouchY_Implementation(float Value)
 
 void ARootModellingPawn::MoveSelectionUp_Implementation()
 {
-  UE_LOG(LogTemp,Display,TEXT("Going UP the root"));
-  AOverlapTransform * NewSelect;
-  if(Selection.Num() == 1)
+  UE_LOG(LogTemp, Display, TEXT("Going UP the root"));
+  AOverlapTransform* NewSelect;
+  if (Selection.Num() == 1)
   {
-    NewSelect = RegisteredDrawSpace->MoveSelection(Selection[0],true);
-    if(NewSelect)
+    NewSelect = RegisteredDrawSpace->MoveSelection(Selection[0], true);
+    if (NewSelect)
     {
       Selection[0]->Selected(false);
       Selection.Empty();
@@ -1532,12 +1558,12 @@ void ARootModellingPawn::MoveSelectionUp_Implementation()
 
 void ARootModellingPawn::MoveSelectionDown_Implementation()
 {
-  UE_LOG(LogTemp,Display,TEXT("Going DOWN the root"));
-  AOverlapTransform * NewSelect;
-  if(Selection.Num() == 1)
+  UE_LOG(LogTemp, Display, TEXT("Going DOWN the root"));
+  AOverlapTransform* NewSelect;
+  if (Selection.Num() == 1)
   {
-    NewSelect = RegisteredDrawSpace->MoveSelection(Selection[0],false);
-    if(NewSelect)
+    NewSelect = RegisteredDrawSpace->MoveSelection(Selection[0], false);
+    if (NewSelect)
     {
       Selection[0]->Selected(false);
       Selection.Empty();
@@ -1563,13 +1589,13 @@ void ARootModellingPawn::SelectEverything_Implementation()
       Selection.Add(oact);
     }
   }
-    MoveMeta->SetActorHiddenInGame(false);
-    MoveMeta->SetActorEnableCollision(true);
-      if(!bDemoVersion)
-      {
-        DiaMeta->SetActorHiddenInGame(false);
-        DiaMeta->SetActorEnableCollision(true);
-      }
+  MoveMeta->SetActorHiddenInGame(false);
+  MoveMeta->SetActorEnableCollision(true);
+  if (!bDemoVersion)
+  {
+    DiaMeta->SetActorHiddenInGame(false);
+    DiaMeta->SetActorEnableCollision(true);
+  }
   return;
 }
 
@@ -1585,5 +1611,55 @@ void ARootModellingPawn::OnSink_Implementation(float Value)
   if (Value != 0.f && IsValid(Head))
   {
     AddMovementInput(Head->GetUpVector(), Value);
+  }
+}
+
+void ARootModellingPawn::OnJumpAxisChange_Implementation(float Value)
+{
+  if(this->RootSystemPanning)
+  {
+    RegisteredDrawSpace->AddActorWorldOffset(FVector(Value, 0, 0));
+    return;
+  }
+  if (Selection.Num() != 1) return;
+  if (Value > 0.8f)
+  {
+    if (iJumpFlag == 1)
+    {
+      AOverlapTransform* NewSelect;
+      NewSelect = RegisteredDrawSpace->MoveSelection(Selection[0], true);
+      if (NewSelect)
+      {
+        Selection[0]->Selected(false);
+        Selection.Empty();
+        Selection.Add(NewSelect);
+        Selection[0]->Selected(true);
+        RegisteredDrawSpace->SyncRadius(NewSelect);
+      }
+    }
+    else if (iJumpFlag == 0)
+    {
+      iJumpFlag = 1;
+    }
+  }
+  else if (Value < -0.8f)
+  {
+    if (iJumpFlag == -1)
+    {
+      AOverlapTransform* NewSelect;
+      NewSelect = RegisteredDrawSpace->MoveSelection(Selection[0], false);
+      if (NewSelect)
+      {
+        Selection[0]->Selected(false);
+        Selection.Empty();
+        Selection.Add(NewSelect);
+        Selection[0]->Selected(true);
+        RegisteredDrawSpace->SyncRadius(NewSelect);
+      }
+    }
+    else if (iJumpFlag == 0)
+    {
+      iJumpFlag = -1;
+    }
   }
 }
