@@ -135,17 +135,17 @@ class Broker(object):
 
   def WaitForMessage(self) :
     self.message = self.serversocket.recv()
-    print(self.message)
+    #print(self.message)
   #waitformessage
 
   def ParseMessage(self) :
     cmdcheck = self.message[0:5]
-    print(cmdcheck[0])
-    print(cmdcheck)
+    #print(cmdcheck[0])
+    #print(cmdcheck)
     self.cmd_int_vars = struct.unpack('II',self.message)
-    print(self.cmd_int_vars)
+    #print(self.cmd_int_vars)
     self.cmd_flt_vars = struct.unpack('<f',self.message[4:8])
-    print(self.cmd_flt_vars)
+    #print(self.cmd_flt_vars)
     return cmdcheck[0]
   #
 
@@ -157,7 +157,7 @@ class Broker(object):
     liststring = "/".join(filelist).encode('ascii','replace')
     nextlength = len(liststring)
     warning = struct.pack('II',NetworkCommandKeys['files'],nextlength)
-    print(liststring)
+    #print(liststring)
     self.serversocket.send(warning)
     okayreq = self.serversocket.recv()
     replycmd = struct.unpack('II',okayreq)[0]
@@ -174,7 +174,7 @@ class Broker(object):
     bufferwarning = pointlistlengths.max()*4+4
     warning = struct.pack('III',NetworkCommandKeys["rootdat"],len(roots),bufferwarning)
     print("Warning: " + "rootdat" + " " + str(len(roots)) + " " + str(bufferwarning))
-    print(warning)
+    #print(warning)
     self.serversocket.send(warning)
     message = self.serversocket.recv()
     reply = struct.unpack('II',message)
@@ -183,7 +183,7 @@ class Broker(object):
       for i,root in enumerate(roots):
         #print("sending root: " + str(i+1) + "/" + str(len(roots)) + " with " + str(len(root.Nodes)))
         meta = struct.pack('IiIi',root.RootNumber,int(root.Predecessor),len(root.Nodes),root.ParentNode)
-        print(meta)
+        #print(meta)
         meta += (np.array(root.Nodes)).astype(np.float32).tostring()
         #for point in root.Nodes :
         #  meta += struct.pack('fff',point[0],point[1],point[2])
@@ -215,7 +215,7 @@ class Broker(object):
   def ReceiveRoot(self) :
     self.serversocket.send(struct.pack('II',NetworkCommandKeys['alive'],0))
     mroot = self.serversocket.recv()
-    print(len(mroot))
+    print("Received root system of length " + str(len(mroot)))
     # i am mroot
     if len(mroot) < 16 :
       return -1,-1,-1,[],[]
@@ -223,8 +223,8 @@ class Broker(object):
     predecessor = struct.unpack('i',mroot[4:8])[0]
     numpoints = struct.unpack('I',mroot[8:12])[0]
     parentnode = struct.unpack('i',mroot[12:16])[0]
-    print(rootnumber, " ", predecessor, " ", numpoints, " ", parentnode)
-    print(16+(4*4*numpoints))
+    #print(rootnumber, " ", predecessor, " ", numpoints, " ", parentnode)
+    #print(16+(4*4*numpoints))
     points = []
     for i in range(numpoints) :
       bwstart = 16 + (4*3*i)

@@ -14,6 +14,7 @@ import random
 from sys import platform
 from datetime import datetime
 import traceback
+import re
 
 Port = 12575
 RootFolder = ""
@@ -23,6 +24,7 @@ KnownRootExtensions = ['rsml','vtp']
 
 resolution = 0.045
 spacing = [resolution,resolution,resolution]
+spacing = [0.02734,0.02734,0.1]
 
 NodeTransformer = lambda x : x #+ np.array([111.0*0.05,111.0*0.05,100.0*0.1])
 DiameterTransform = lambda r : r
@@ -46,14 +48,16 @@ class RootFileHandle :
     self.folder = (folder  + "/") if folder[-1] != "/" else folder
     folderlist = os.listdir(folder)
     datasetlist = sorted([f for f in folderlist if any(ex in f for ex in KnownFileExtensions)])
-    print(sorted([s.lower() for s in datasetlist]))
+    # must comply with a \d+x\d+x\d+ entry
+    datasetlist = [f for f in datasetlist if re.search("\d+x\d+x\d+",f) is not None]
+    #print(sorted([s.lower() for s in datasetlist]))
     datasetlist = [datasetlist[i] for i,s in (sorted(enumerate([s.lower() for s in datasetlist]),key=lambda x:x[1]))]
     print(datasetlist)
     self.datalist = []
     self.marked = -1
     i=0
     for f in datasetlist :
-      print(f)
+      #print(f)
       stem,ex = f.rsplit('.',1)
       self.datalist.append({"file":f,"ext":ex})
       if not os.path.isdir(folder + "/" + stem) :
@@ -183,7 +187,7 @@ def Main() :
       folder.MarkFile(fileid)
       print("Remote end marked fileid: ",folder.GetFile())
       print("Remote end marked fileid: ",folder.marked)
-      print(folder.list())
+      #print(folder.list())
       filename = folder.GetFile()
       fhandle.Init(filename)
       fhandle.SetIsoValue(fhandle.GetIsoRange()[0] + 0.5*(fhandle.GetIsoRange()[1]-fhandle.GetIsoRange()[0]))
@@ -226,7 +230,11 @@ def Main() :
           print(traceback.format_exc(e))
           broker.AnswerCommand(Broker.NetworkCommandKeys['rootomni'])
         else :
-          broker.SendRootSystem(rootdata)
+          if len(rootdata) == 0 :
+            print("No root data")
+            broker.AnswerCommand(Broker.NetworkCommandKeys['rootomni'])
+          else :
+            broker.SendRootSystem(rootdata)
       #broker.SendScalars("rootomni",'I',[0])
       #print("No no root right now sowwy")
     elif cmd == Broker.NetworkCommandKeys['random'] :
@@ -259,13 +267,14 @@ def Main() :
         Roots.append(Root(np.array(Points),[].copy(),{"diameter":np.array(Diameters)}.copy(),RootNumber=n,Pred=predecessor,PaNo=joint))
       broker.SendRootSystem(Roots)
     elif cmd == Broker.NetworkCommandKeys['chiso'] :
-      print("received iso request")
       isovalue = broker.cmd_flt_vars[0]
+      print("received iso request for ",isovalue)
       fhandle.SetIsoValue(isovalue)
       if not broker.paraviewavailable :
         p = fhandle.GetPoints()
         t = fhandle.GetTriangles()
         n = fhandle.GetNormals()
+        print("Sending arrays (p: ",len(p),", t: ",len(t),", n: ",len(n),")")
         if not all(broker.SendArrays(p,t,n)) :
           print("Could not send everything")
         else :
@@ -274,11 +283,11 @@ def Main() :
     elif cmd == Broker.NetworkCommandKeys['isorange'] :
       print("Received a request for the range")
       isorange = fhandle.ComputeIsoRangeByHistogram(32)
-      isorange = (isorange[0], isorange[0] + 0.7*(isorange[1]-isorange[0]))
+      #isorange = (isorange[0], isorange[0] + 0.7*(isorange[1]-isorange[0]))
       print("Histogram isorange is now: ",isorange)
       broker.SendScalars('isorange','f',isorange)
-      print("Got")
     elif cmd == Broker.NetworkCommandKeys['save'] :
+      print("Received command to save the root system")
       num = broker.cmd_int_vars[1]
       roots = [Root() for i in range(num)]
       roots = []
@@ -291,7 +300,7 @@ def Main() :
         #roots[i].Predecessor = a
         #roots[i].Nodes = n.copy()
         #roots[i].Functions = {"diameter":d.copy()}.copy()
-      print([root.RootNumber for root in roots])
+      #print([root.RootNumber for root in roots])
       broker.AnswerAlive()
       vers = folder.NextVersion()
       try:
@@ -304,7 +313,7 @@ def Main() :
       except Exception as e:
         print(traceback.format_exc(e))
       folder.UpdateFolder(folder.marked)
-      print("Got")
+      #print("Got")
     elif cmd == Broker.NetworkCommandKeys['topology'] :
       print("Received command to get topology")
       num = broker.cmd_int_vars[1]

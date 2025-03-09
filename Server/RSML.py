@@ -675,6 +675,8 @@ class ParseRSML :
   #enddef
 
   def IncurseRoots(self, rootelement) :
+    if rootelement == None :
+      return []
     rootlist = []
     elementlist = [[rootelement,-1]]
     while len(elementlist) > 0 :
@@ -682,8 +684,14 @@ class ParseRSML :
       element = parentelementpair[0]
       rn = parentelementpair[1]
       elementlist = elementlist[1:]
-      parentnode = int(element.find("properties").find("parent-node").get("value"))
-      pl = element.find("geometry").find("polyline")
+      parentnode_find = element.find("properties")
+      parentnode_find = parentnode_find.find("parent-node")
+      if parentnode_find == None :
+        parentnode = -1
+      else :
+        parentnode = int(parentnode_find.get("value"))
+      geomnode = element.find("geometry")
+      pl = geomnode.find("polyline")
       functionnames = [f.get("name") \
         for f in (element.find("functions").findall("functions"))]
       functions = [[float(v.get("value")) for v in f.findall("sample")] \

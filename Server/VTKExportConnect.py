@@ -15,14 +15,14 @@ class VTKExportConnect :
     extension = filename.rsplit('.',1)
     if "raw" in extension :
       pattern = re.search("\d+x\d+x\d+",filename)
-      spacingpatternend=filename.find("res")
+      #spacingpatternend=filename.find("res")
       #spacing = [float(s) for s in filename[filename.rfind("/")+1:spacingpatternend].split("_")]
       resolution = [int(s)-1 for s in pattern.group(0).split('x')]
       self.reader = vtk.vtkImageReader()
       self.reader.SetFileName(filename)
       fsize = os.stat(filename).st_size
       esize = int(np.prod(np.array(resolution)+1))
-      print("\n\tFile: ",fsize," --- and E:",esize)
+      #print("\n\tFile: ",fsize," --- and E:",esize)
       if esize == fsize :
         self.reader.SetDataScalarType(vtk.VTK_UNSIGNED_CHAR)
       elif 2*esize == fsize :
@@ -111,12 +111,14 @@ class VTKExportConnect :
   def SetIsoValue(self, val : float) :
     if val < 1.0 :
       val = 1.0
+    print("Setting isovalue to: ", val)
     self.isosurface.SetValue(0,val)
     self.isosurface.Update()
     self.reduce.Update()
     self.normals.Update()
     self.geometry.Update()
     self.output.Update()
+    print("Isovalue set to: ", val)
   #
   def ComputeIsoRangeByHistogram(self, bins : int) :
     # Retrieve data directly from reader
