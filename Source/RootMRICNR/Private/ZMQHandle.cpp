@@ -934,10 +934,10 @@ bool BrokerThread::Init()
   UE_LOG(LogTemp,Warning,TEXT("%s"),*ServerConnectionName);
   context = zmq_ctx_new();
   requester = zmq_socket(context, ZMQ_REQ);
-//#ifndef UE_BUILD_DEBUG
-//  int timeout = 10000;
-//  zmq_setsockopt(requester, ZMQ_RCVTIMEO,&timeout,sizeof(int));
-//#endif
+#if defined UE_BUILD_DEBUG && false
+  int timeout = 10000;
+  zmq_setsockopt(requester, ZMQ_RCVTIMEO,&timeout,sizeof(int));
+#endif
 
   //rc = zmq_connect(requester, TCHAR_TO_ANSI(*ServerConnectionName));
   rc = zmq_connect(requester, "tcp://127.0.0.1:12575");
