@@ -49,11 +49,16 @@ public class StaticZMQ : ModuleRules
 				// ... add any modules that your module loads dynamically here ...
 			}
 			);
-
+    // just load if not android
+    if (Target.Platform == UnrealTargetPlatform.Win64
+        || Target.Platform == UnrealTargetPlatform.Mac || Target.Platform == UnrealTargetPlatform.Linux)
+    {
         string fullpath = ModuleDirectory.ToString();
         fullpath = fullpath.Substring(0, fullpath.LastIndexOf("\\"));
         string path = fullpath.Substring(0, fullpath.LastIndexOf("\\"));
 		PublicAdditionalLibraries.Add(Path.Combine(path, "Binaries", "Win64", "libzmq-mt-4_3_3.lib"));
 		PublicDelayLoadDLLs.Add("libzmq-mt-4_3_3.dll");
+            PublicIncludePaths.Add(Path.Combine(path, "Source", "ThirdParty", "StaticZMQLibrary", "include"));
+        }
 	}
 }

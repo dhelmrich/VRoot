@@ -4,7 +4,9 @@
 #include "Core.h"
 #include "Modules/ModuleManager.h"
 #include "Interfaces/IPluginManager.h"
-#include "StaticZMQLibrary/zmq.h"
+//#include "ThirdParty/StaticZMQLibrary/include/zmq.h"
+#include "zmq.h"
+
 
 #define LOCTEXT_NAMESPACE "FStaticZMQModule"
 
@@ -34,7 +36,6 @@ void FStaticZMQModule::StartupModule()
   if (ExampleLibraryHandle)
   {
     // Call the test function in the third party library that opens a message box
-    //FMessageDialog::Open(EAppMsgType::Ok, LOCTEXT("ThirdPartyLibraryError", "Loading ZMQ Successfull"));
 
     FPlatformProcess::GetDllExport(ExampleLibraryHandle, TEXT("Binaries/Win64/libzmq-mt-4_3_3.dll"));
 
@@ -42,6 +43,7 @@ void FStaticZMQModule::StartupModule()
 
 
     zmq_has("ipc");
+    //FMessageDialog::Open(EAppMsgType::Ok, LOCTEXT("ThirdPartyLibraryError", "Loading ZMQ Successfull"));
   }
   else
   {

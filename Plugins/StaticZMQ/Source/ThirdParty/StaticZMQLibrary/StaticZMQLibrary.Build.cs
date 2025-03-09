@@ -19,6 +19,9 @@ public class StaticZMQLibrary : ModuleRules
 
 			// Ensure that the DLL is staged along with the executable
 			RuntimeDependencies.Add("$(PluginDir)/Binaries/ThirdParty/StaticZMQLibrary/Win64/libzmq-mt-4_3_3.dll");
+
+			// Add the library directory to include paths
+			PublicIncludePaths.Add("$(PluginDir)/Source/ThirdParty/StaticZMQLibrary/include");
         }
         else if (Target.Platform == UnrealTargetPlatform.Mac)
         {
@@ -28,6 +31,11 @@ public class StaticZMQLibrary : ModuleRules
 		else if (Target.Platform == UnrealTargetPlatform.Linux)
         {
 			PublicAdditionalLibraries.Add(Path.Combine(ModuleDirectory, "lib", "libzmq.so"));
+        }
+		else if (Target.Platform == UnrealTargetPlatform.Android)
+		{
+            // add definition to C++ preprocessor
+            PublicDefinitions.Add("NO_ZMQ_STATIC_DEFINE");
         }
 	}
 }

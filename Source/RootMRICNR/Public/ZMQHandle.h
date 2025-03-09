@@ -8,10 +8,25 @@
 
 THIRD_PARTY_INCLUDES_START
 #if PLATFORM_WINDOWS
-#include "StaticZMQLibrary/zmq.h"
-#else
+#include "zmq.h"
+#elif PLATFORM_LINUX
 #include "zmq.h"
 #include <unistd.h>
+#else
+// null definitions of the zmq methods
+#define zmq_ctx_new() nullptr
+#define zmq_ctx_term(ctx)
+#define zmq_socket(ctx, type) nullptr
+#define zmq_connect(socket, addr) -1
+#define zmq_send(socket, buffer, len, flags) -1
+#define zmq_recv(socket, buffer, len, flags) -1
+#define zmq_close(socket)
+#define zmq_msg_init(msg)
+#define zmq_msg_close(msg)
+#define zmq_ctx_destroy(ctx)
+#define zmq_msg_send(msg, socket, flags) -1
+#define zmq_msg_recv(msg, socket, flags) -1
+#define zmq_disconnect(socket, addr) -1
 #endif
 THIRD_PARTY_INCLUDES_END
 #include "HAL/RunnableThread.h"
@@ -168,7 +183,7 @@ private:
   bool ready = false;
   char buffer[20];
   char scalarbuffer[ZMQ_SCALAR_LEN];
-  MessageData<> cmdbuf{0,0};
+  MessageData<> cmdbuf{ {0,0} };
 
   void HandleReceiveIsosurface(bool bUpdate = false);
   void CheckForRootSystem(EZMQState reason = EZMQState::zmq_sfile);
