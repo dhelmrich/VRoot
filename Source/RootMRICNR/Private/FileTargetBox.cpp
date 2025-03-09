@@ -85,7 +85,7 @@ void AFileTargetBox::RegisterRuntime(FString filename, int fileid, int lFontSize
 
 void AFileTargetBox::Write(FString filename, int fileid, int lFontSize)
 {
-  if(!this)
+  if(!IsValid(this))
     return;
   FileName = filename;
   FileID = fileid;

@@ -1,5 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
+#if 0
 
 #include "LeaderBoard.h"
 
@@ -139,3 +139,4 @@ void ALeaderBoard::EndPlay(const EEndPlayReason::Type EndPlayReason)
   Super::EndPlay(EndPlayReason);
   DumpLeaderbord();
 }
+#endif

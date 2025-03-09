@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "SynchronizationHelper.h"
 #include "FileTargetBox.h"
 #include "DrawSpace.h"
@@ -104,6 +103,11 @@ void ASynchronizationHelper::MakeFileNameTile(FString FileName, unsigned int ID)
 
 void ASynchronizationHelper::SendAfterActionTaken()
 {
+  // check that root sink is valid
+  if (!RootSink || IsValid(RootSink) == false)
+  {
+    return;
+  }
   TArray<URoot*> data = RootSink->ParseSegmentsIntoRootsystem(false);
   ServerConnect->SendRootSystem(data);
 }
@@ -365,12 +369,13 @@ void ASynchronizationHelper::UpdateRange(float l, float u)
   {
     GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, FString::Printf(TEXT("Now: %f->%f"), l,u));
   }
-  IsoMinSign->Write(FString::Printf(TEXT("Min: %f"), u), -1);
-  IsoMaxSign->Write(FString::Printf(TEXT("Max: %f"), l), -1);
+  IsoMinSign->Write(FString::Printf(TEXT("Min: %f"), l), -1);
+  IsoMaxSign->Write(FString::Printf(TEXT("Max: %f"), u), -1);
   IsoSlider->SetActorLocation(IsoSlider->BeginPlayLocation);
-  float d = l - u;
-  IsoMin = u;
-  IsoMax = l;
+  if (l > u) std::swap(l, u);
+  float d = u - l;
+  IsoMin = l;
+  IsoMax = u;
   bInit = 1;
 }
 
@@ -422,4 +427,3 @@ void ASynchronizationHelper::BeginDestroy()
 {
   Super::BeginDestroy();
 }
-

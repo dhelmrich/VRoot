@@ -76,7 +76,7 @@ void AOverlapTransform::HighLight(int HighlightValue)
 
 void AOverlapTransform::SetTemporary(bool NewTemporarilyVisible)
 {
-	if (this && !IsValid(this))
+	if (!IsValid(this))
 	{
 		this->bTemporarilyVisible = NewTemporarilyVisible;
 	}

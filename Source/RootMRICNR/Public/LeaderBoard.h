@@ -1,5 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#if 0
 #pragma once
 
 #include "CoreMinimal.h"
@@ -49,3 +50,4 @@ protected:
   virtual void BeginPlay() override;
   virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 };
+#endif

@@ -108,8 +108,8 @@ public:
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Draw")
     bool bStartSelect = false;
 
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Draw")
-    bool bCenterRootSystem = false;
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Config, Category = "Draw")
+    bool bCenterRootSystem = true;
 
     // DEBUG VALUES
 
