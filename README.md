@@ -9,7 +9,10 @@ All detailed information will be found in the wiki page: https://github.com/dhel
 
 This is an Unreal Engine project, and an Epic Games account is required to build it. This is not the case for release executables, but for the purposes of changing or adapting this application, Unreal Engine is required.
 
-## Notes
+## Main Branch
 
-This repository is the supplemental repository for our article, and we will upload the software when we upload the preprint.
-Additionally, we will prepare Vive Pro VR and Quest 3 VR releases of the software for immediate testing.
+This branch is designed to deploy locally on a machine capable of handling VR workloads. We are optimizing this software to run on an RTX 2060, so with more modern hardware you might get more out of it.
+
+The `Server` folder contains the data analysis server that you can use to load and reference MRI+RSML data.
+
+For the version of the software optimized for standalone service, see the standalone branch.
