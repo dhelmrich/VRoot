@@ -1624,42 +1624,42 @@ void ARootModellingPawn::OnJumpAxisChange_Implementation(float Value)
   if (Selection.Num() != 1) return;
   if (Value > 0.8f)
   {
-    if (iJumpFlag == 1)
-    {
-      AOverlapTransform* NewSelect;
-      NewSelect = RegisteredDrawSpace->MoveSelection(Selection[0], true);
-      if (NewSelect)
-      {
-        Selection[0]->Selected(false);
-        Selection.Empty();
-        Selection.Add(NewSelect);
-        Selection[0]->Selected(true);
-        RegisteredDrawSpace->SyncRadius(NewSelect);
-      }
-    }
-    else if (iJumpFlag == 0)
+    if (iJumpFlag == 0)
     {
       iJumpFlag = 1;
     }
   }
   else if (Value < -0.8f)
   {
-    if (iJumpFlag == -1)
-    {
-      AOverlapTransform* NewSelect;
-      NewSelect = RegisteredDrawSpace->MoveSelection(Selection[0], false);
-      if (NewSelect)
-      {
-        Selection[0]->Selected(false);
-        Selection.Empty();
-        Selection.Add(NewSelect);
-        Selection[0]->Selected(true);
-        RegisteredDrawSpace->SyncRadius(NewSelect);
-      }
-    }
-    else if (iJumpFlag == 0)
+    if (iJumpFlag == 0)
     {
       iJumpFlag = -1;
+    }
+  }
+  else if (Value > -0.8f && iJumpFlag == -1)
+  {
+    AOverlapTransform* NewSelect;
+    NewSelect = RegisteredDrawSpace->MoveSelection(Selection[0], false);
+    if (NewSelect)
+    {
+      Selection[0]->Selected(false);
+      Selection.Empty();
+      Selection.Add(NewSelect);
+      Selection[0]->Selected(true);
+      RegisteredDrawSpace->SyncRadius(NewSelect);
+    }
+  }
+  else if (Value < 0.8f && iJumpFlag == 1)
+  {
+    AOverlapTransform* NewSelect;
+    NewSelect = RegisteredDrawSpace->MoveSelection(Selection[0], true);
+    if (NewSelect)
+    {
+      Selection[0]->Selected(false);
+      Selection.Empty();
+      Selection.Add(NewSelect);
+      Selection[0]->Selected(true);
+      RegisteredDrawSpace->SyncRadius(NewSelect);
     }
   }
 }
