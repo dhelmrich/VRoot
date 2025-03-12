@@ -1648,6 +1648,7 @@ void ARootModellingPawn::OnJumpAxisChange_Implementation(float Value)
       Selection[0]->Selected(true);
       RegisteredDrawSpace->SyncRadius(NewSelect);
     }
+    iJumpFlag = 0;
   }
   else if (Value < 0.8f && iJumpFlag == 1)
   {
@@ -1661,5 +1662,6 @@ void ARootModellingPawn::OnJumpAxisChange_Implementation(float Value)
       Selection[0]->Selected(true);
       RegisteredDrawSpace->SyncRadius(NewSelect);
     }
+    iJumpFlag = 0;
   }
 }
