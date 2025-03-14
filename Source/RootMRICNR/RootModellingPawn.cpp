@@ -316,7 +316,7 @@ void ARootModellingPawn::BeginPlay()
   ScaleTimerDel.BindLambda([this]()
     {
       if (Selection.Num() > 0)
-        RegisteredDrawSpace->UpdateSections(Selection, bFixSegmentSize);
+        RegisteredDrawSpace->UpdateSections(Selection, bFixSegmentSize, bAdjustRadiusDuringDrawing);
     });
 
   if (CheckIsHeadMountedModeActive())
