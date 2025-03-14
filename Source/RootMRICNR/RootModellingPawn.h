@@ -193,7 +193,7 @@ public:
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Config, Category = "System")
   bool bUseHMD = false;
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Config, Category = "Draw")
-  bool bAdjustRadiusDuringDrawing = false;
+  bool bAdjustRadiusDuringDrawing = true;
   UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Edit")
   class AStaticMeshActor* ZeroHighlight;
 

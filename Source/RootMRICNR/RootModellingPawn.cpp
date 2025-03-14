@@ -479,7 +479,7 @@ void ARootModellingPawn::OnScale_Implementation(float Rate)
 {
   if(this->RootSystemPanning)
   {
-    RegisteredDrawSpace->AddActorWorldOffset(FVector(0,Rate,0));
+    RegisteredDrawSpace->SetActorLocation(RegisteredDrawSpace->GetActorLocation() + FVector(-Rate, 0, 0));
   }
   else if (FMath::Abs(Rate) > 0.4f)
   {
@@ -955,7 +955,7 @@ void ARootModellingPawn::OnChangeHeight_Implementation(float Value)
   if (ScaleNotPan && Value != 0.f)
   {
     FVector NewScale = RegisteredDrawSpace->GetActorScale3D();
-    NewScale += FVector(Value, Value, Value) * 0.5;
+    NewScale += FVector(Value, Value, Value) * 0.25;
     RegisteredDrawSpace->SetActorScale3D(NewScale);
   }
   else
@@ -1618,7 +1618,7 @@ void ARootModellingPawn::OnJumpAxisChange_Implementation(float Value)
 {
   if(this->RootSystemPanning)
   {
-    RegisteredDrawSpace->AddActorWorldOffset(FVector(Value, 0, 0));
+    RegisteredDrawSpace->SetActorLocation(RegisteredDrawSpace->GetActorLocation() + FVector(0, Value, 0));
     return;
   }
   if (Selection.Num() != 1) return;

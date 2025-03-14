@@ -1,4 +1,8 @@
 import vtk
+# disable vtk error message window
+vtk.vtkObject.GlobalWarningDisplayOff()
+
+
 #from paraview.simple import *
 #from rsmi_polyline_parse import Root
 import configparser
