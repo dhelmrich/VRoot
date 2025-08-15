@@ -685,7 +685,8 @@ void BrokerThread::SendRootSystem()
   zmq_recv(requester,answer.dat,sizeof(answer),0);
   unsigned int maxsize = 0;
   for (URoot* root : RootSystem)
-    maxsize = FGenericPlatformMath::Max(maxsize,(unsigned int)root->LCJointPositions.Num());
+    if (root && (unsigned int)root->LCJointPositions.Num() > maxsize)
+      maxsize = FGenericPlatformMath::Max(maxsize,(unsigned int)root->LCJointPositions.Num());
   char* boof = new char[16 * maxsize + 16];
   int* boofi = reinterpret_cast<int*>(boof);
   float* booff = reinterpret_cast<float*>(boof);
